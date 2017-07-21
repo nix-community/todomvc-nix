@@ -1,6 +1,6 @@
 UNAME="$(shell uname -s)"
 
-all: happstack.docker scotty.docker servant.docker snap.docker spock.docker yesod.docker
+all: scotty.docker
 
 %.bin:
 ifeq ($(UNAME), "Darwin")
