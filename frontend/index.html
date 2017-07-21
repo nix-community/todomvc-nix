@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Todo-Backend client</title>
-		<link rel="stylesheet" href="css/vendor/todomvc-common.css">
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
 		<link rel="stylesheet" href="css/chooser.css">
 	</head>
 	<body>
@@ -11,7 +11,7 @@
     <section id="api-root">
       <div class="wrapper">
         <label for="api-root-url">Todo-Backend api root</label>
-        <input id="api-root-url" placeholder="e.g. http://todo-backend-sinatra.herokuapp.com/todos"></input>
+        <input id="api-root-url" value="http://localhost:3000/todos" placeholder="e.g. http://todo-backend-sinatra.herokuapp.com/todos"></input>
       </div>
       <button>go</button>
     </section>
@@ -63,10 +63,10 @@
 			<button id="clear-completed">Clear completed (<%= completed %>)</button>
 			<% } %>
 		</script>
-		<script src="js/vendor/todomvc-common.js"></script>
-		<script src="js/vendor/jquery.js"></script>
-		<script src="js/vendor/underscore.js"></script>
-		<script src="js/vendor/backbone.js"></script>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script src="node_modules/jquery/dist/jquery.js"></script>
+		<script src="node_modules/underscore/underscore.js"></script>
+		<script src="node_modules/backbone/backbone.js"></script>
 
 		<script src="js/models/todo.js"></script>
 		<script src="js/collections/todos.js"></script>

@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "a TodoMVC client which uses a TodoBackend implementation to store its todos.",
   "scripts": {
-    "prepublish": "grunt",
-    "build": "grunt",
+    "build": "./build",
     "start": "open index.html || sensible-browser index.html || xdg-open index.html"
   },
   "repository": {
@@ -17,10 +16,10 @@
     "url": "https://github.com/TodoBackend/todo-backend-client/issues"
   },
   "homepage": "https://github.com/TodoBackend/todo-backend-client",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-bowercopy": "^1.2.0",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-clean": "^0.6.0"
+  "dependencies": {
+    "backbone": "^1.1.1",
+    "jquery": "^2.0.0",
+    "todomvc-common": "^0.1.4",
+    "underscore": "^1.6.0"
   }
 }

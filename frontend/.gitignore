@@ -1,4 +1,2 @@
-/bower_components
+/dist
 /node_modules
-/js/vendor
-/css/vendor

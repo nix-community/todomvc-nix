@@ -1,0 +1,37 @@
+#!/bin/sh -eu
+#
+# This takes all the build inputs and copies them into the
+# dist/ folder.
+#
+# In a real project, this script would be replaced by a js
+# build pipeline like webpack that bundles and compresses the
+# source.
+
+# copies all the select files to the first argument,
+# retaining the file structure.
+copy_to() {
+  local target=$1
+  shift
+  for file in "$@"; do
+    dir=$(dirname "$file")
+    mkdir -p "$target/$dir"
+    cp -v "$file" "$target/$file"
+  done
+}
+
+cd "$(dirname "$0")"
+
+target=dist
+
+rm -rf "$target"
+
+copy_to "$target" \
+  index.html \
+  js/*.js \
+  js/*/*.js \
+  css/*.css \
+  img/* \
+  node_modules/backbone/backbone.js \
+  node_modules/jquery/dist/jquery.js \
+  node_modules/todomvc-common/base.* \
+  node_modules/underscore/underscore.js
