@@ -11,4 +11,7 @@ with super;
   inherit (self.yarn2nix) mkYarnPackage;
 
   frontend = self.callPackage ./frontend {};
+
+  backend = self.callPackage ./backend {};
+
 }

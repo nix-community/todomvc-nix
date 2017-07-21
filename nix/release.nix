@@ -6,4 +6,5 @@ let pkgs = import ./.; in {
 
   inherit (pkgs) frontend;
 
+  backend = pkgs.backend.todobackend-scotty;
 }
