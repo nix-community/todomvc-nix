@@ -1,0 +1,17 @@
+flags: {}
+packages:
+- todobackend-common
+- todobackend-happstack
+- todobackend-scotty
+- todobackend-servant
+- todobackend-snap
+- todobackend-spock
+- todobackend-yesod
+extra-deps:
+- io-streams-haproxy-1.0.0.0
+- heist-1.0.0.0
+- snap-1.0.0.0
+- snap-core-1.0.0.0
+- snap-server-1.0.0.0
+- xmlhtml-0.2.3.5
+resolver: lts-6.10
