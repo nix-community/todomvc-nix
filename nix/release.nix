@@ -4,5 +4,6 @@
  */
 let pkgs = import ./.; in {
 
+  inherit (pkgs) frontend;
 
 }
