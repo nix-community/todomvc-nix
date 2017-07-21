@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Entry-point that the CI should run on each commit.
+#
+
+cd "$(dirname "$0")/.."
+
+nix-build nix/release.nix --no-out-link
+
+# TODO: this script also should push to the binary cache
