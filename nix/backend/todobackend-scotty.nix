@@ -7,6 +7,7 @@ mkDerivation {
   src = ../../backend/todobackend-scotty;
   isLibrary = false;
   isExecutable = true;
+  enableSharedExecutables = false;
   executableHaskellDepends = [
     base http-types path-pieces persistent-sqlite scotty
     todobackend-common transformers
