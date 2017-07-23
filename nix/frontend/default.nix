@@ -9,6 +9,7 @@ mkYarnPackage {
   '';
 
   installPhase = ''
-    cp -r dist/ $out
+    mkdir -p $out/var
+    cp -r dist/ $out/var/www
   '';
 }
