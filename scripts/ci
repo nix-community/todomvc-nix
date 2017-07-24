@@ -7,4 +7,5 @@ cd "$(dirname "$0")/.."
 
 nix-build nix/release.nix --no-out-link
 
-# TODO: this script also should push to the binary cache
+# push to binary cache
+nix-push "$(nix-build nix/release.nix --no-out-link)"
