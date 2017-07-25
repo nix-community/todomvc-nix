@@ -1,0 +1,6 @@
+#!/bin/sh
+cd "$(dirname "$0")/.."
+
+cmd="nix-build nix -A scripts.run --no-out-link"
+$cmd
+$($cmd)
