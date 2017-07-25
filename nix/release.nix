@@ -9,5 +9,6 @@ let pkgs = import ./.; in {
     frontend-image
     backend
     backend-image
+    todomvc-run
     ;
 }
