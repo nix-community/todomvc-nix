@@ -5,7 +5,9 @@
  */
 import <nixpkgs> {
   # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
-  config = { };
+  config = {
+    allowBroken = true;
+  };
   overlays = [
     # all the packages are defined there:
     (import ./all-packages.nix)
