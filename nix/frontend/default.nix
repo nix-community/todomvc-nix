@@ -1,4 +1,4 @@
-{ lib, mkYarnPackage, srcPath ? ../../frontend }:
+{ lib, mkYarnPackage, linkNodeModulesHook, srcPath ? ../../frontend }:
 mkYarnPackage {
   src = lib.sources.cleanSource srcPath;
   packageJson = srcPath + "/package.json";
@@ -12,4 +12,6 @@ mkYarnPackage {
     mkdir -p $out/var
     cp -r dist/ $out/var/www
   '';
+
+  shellHook = linkNodeModulesHook;
 }

@@ -2,6 +2,6 @@
 callPackage (fetchFromGitHub {
   owner = "zimbatm";
   repo = "yarn2nix";
-  rev = "refactor";
-  sha256 = "1sxxcinwf7a0klhs4zwm2z1g255944dp5r5yslpyf21k3bkri962";
+  rev = "shell-hook";
+  sha256 = "0519ralpcr6307ma9dcjz49n1ahgwh4gr8h4q06hngwvak9cjlh5";
 }) {}
