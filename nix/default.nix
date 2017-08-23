@@ -3,7 +3,7 @@
  *
  * TODO: pin <nixpkgs>
  */
-import <nixpkgs> {
+import ./nixpkgs {
   # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
   config = {
     allowBroken = true;

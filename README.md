@@ -20,6 +20,5 @@ I didn't have the time to implement everything. Here are the missing bits:
 * setup the binary cache
 * handle docker images on Darwin
 * improve the `nix-shell` experience
-* pin `<nixpkgs>`
 
 Let me know if you want to see any of these happening.
