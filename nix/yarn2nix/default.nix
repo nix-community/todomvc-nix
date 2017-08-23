@@ -1,7 +1,6 @@
-{ fetchFromGitHub, callPackage }:
-callPackage (fetchFromGitHub {
-  owner = "zimbatm";
-  repo = "yarn2nix";
-  rev = "shell-hook";
-  sha256 = "0519ralpcr6307ma9dcjz49n1ahgwh4gr8h4q06hngwvak9cjlh5";
-}) {}
+{ lib, fetchFromGitHub, callPackage }:
+let
+  srcAttr = builtins.removeAttrs (lib.importJSON ./src.json) ["branch"];
+  src = fetchFromGitHub srcAttr;
+in
+  callPackage src {}
