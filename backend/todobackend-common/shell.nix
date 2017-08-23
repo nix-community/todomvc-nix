@@ -1,1 +1,1 @@
-(import ../../nix).backend.todobackend-common.env
+(import ../../nix).haskellPackages.todobackend-common.env
