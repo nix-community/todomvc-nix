@@ -54,6 +54,5 @@ with super;
 
   scripts = {
     run = callPackage ./scripts/run.nix { };
-    nix-push = callPackage ./scripts/nix-push.nix { };
   };
 }

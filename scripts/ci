@@ -7,10 +7,13 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-nix-build nix/release.nix --no-out-link
-nix-build nix/release.nix -A scripts --no-out-link
+target=nix/release.nix
+buildArgs=(
+  "$target"
+  --no-out-links
+)
 
-links=$(nix-build nix/release.nix --no-out-link)
+nix-build "${buildArgs[@]}"
 
 # push to binary cache
-$(nix-build nix/release.nix -A scripts.nix-push --no-out-link) "$links"
+scripts/nix-cloud-push $(nix-build "${buildArgs[@]}")

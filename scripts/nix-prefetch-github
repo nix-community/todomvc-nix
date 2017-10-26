@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash nix curl jq
+#!nix-shell -I nixpkgs=nix -i bash -p bash nix curl jq
 #
 # Updates the src.json to the latest commit
 set -euo pipefail
