@@ -7,8 +7,10 @@ with super;
 
 {
   lib = super.lib // {
-    path = super.callPackage ./lib/path.nix { };
+    path = self.callPackage ./lib/path.nix { };
   };
+
+  mkShell = self.callPackage ./build-support/mk-shell.nix {};
 
   yarn2nix = self.callPackage ./yarn2nix {};
 
