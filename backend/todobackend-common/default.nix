@@ -1,1 +1,1 @@
-(import ../../nix).haskellPackages.todobackend-common
+(import ../../nix {}).haskellPackages.todobackend-common

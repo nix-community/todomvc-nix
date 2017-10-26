@@ -1,1 +1,1 @@
-(import ../../nix).backend
+(import ../../nix {}).backend

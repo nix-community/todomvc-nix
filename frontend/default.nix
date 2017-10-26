@@ -1,1 +1,1 @@
-(import ../nix).frontend
+(import ../nix {}).frontend
