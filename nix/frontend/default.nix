@@ -1,6 +1,11 @@
 { lib, mkYarnPackage, linkNodeModulesHook, srcPath ? ../../frontend }:
+let
+  filterNodeModules = name: type: name == "node_modules";
+
+  rules = lib.path.composeFilters filterNodeModules lib.path.cleanSourceFilter;
+in
 mkYarnPackage {
-  src = lib.sources.cleanSource srcPath;
+  src = lib.path.filter rules srcPath;
 
   buildPhase = ''
     HOME=/tmp/home yarn build

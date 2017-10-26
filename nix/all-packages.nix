@@ -6,6 +6,10 @@ self: super:
 with super;
 
 {
+  lib = super.lib // {
+    path = super.callPackage ./lib/path.nix { };
+  };
+
   yarn2nix = self.callPackage ./yarn2nix {};
 
   inherit (self.yarn2nix) mkYarnPackage linkNodeModulesHook;
