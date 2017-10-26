@@ -6,9 +6,9 @@ let pkgs = import ./.; in {
 
   inherit (pkgs)
     frontend
-    frontend-image
+    frontend-docker
     backend
-    backend-image
+    backend-docker
     scripts
     ;
 }
