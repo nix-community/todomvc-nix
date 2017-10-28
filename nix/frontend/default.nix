@@ -5,7 +5,7 @@ let
   rules = lib.path.composeFilters filterNodeModules lib.path.cleanSourceFilter;
 in
 mkYarnPackage {
-  src = lib.path.filter rules srcPath;
+  src = lib.path.filterOut rules srcPath;
 
   buildPhase = ''
     HOME=/tmp/home yarn build

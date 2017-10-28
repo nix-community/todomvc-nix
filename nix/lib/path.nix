@@ -10,7 +10,7 @@ in
   # This is more natural to most of the use-cases.
   #
   # Filter is used to avoid adding extra files to the /nix/store.
-  filter = filter: path:
+  filterOut = filter: path:
     let
       pathStr = toString path;
       pathSubStart = stringLength pathStr + 1;
