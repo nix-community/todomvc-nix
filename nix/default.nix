@@ -1,8 +1,8 @@
 /**
  * This is the entry-point for all nix execution in this project.
  */
-{ }:
-import ./nixpkgs {
+{ nixpkgsSrc ? ./nixpkgs }:
+import (import ./nixpkgs) {
   # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
   config = {
     allowBroken = true;
