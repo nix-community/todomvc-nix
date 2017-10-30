@@ -21,14 +21,16 @@ let
 in
   stdenv.mkDerivation ({
     name = "nix-shell";
-    phases = ["nobuild"];
+    phases = ["nobuildPhase"];
 
     buildInputs = mergeInputs' "buildInputs";
     nativeBuildInputs = mergeInputs' "nativeBuildInputs";
     propagatedBuildInputs = mergeInputs' "propagatedBuildInputs";
 
     nobuildPhase = ''
-      echo "This derivation is not meant to be built, aborting";
+      echo
+      echo "This derivation is only meant to be used in nix-shell, aborting";
+      echo
       exit 1
     '';
   } // rest)
