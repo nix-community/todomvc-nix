@@ -2,7 +2,20 @@ let
   pkgs = import ./nix {};
 in
 
-pkgs.mkShell {
-  mergeInputs = [pkgs.frontend pkgs.backend];
-  buildInputs = [pkgs.stack pkgs.haskellPackages.ghc];
+with pkgs;
+
+mkShell {
+  mergeInputs = [
+    frontend
+    backend
+  ];
+
+  nativeBuildInputs = [
+    git
+    stack
+  ];
+
+  buildInputs = [
+    haskellPackages.ghc
+  ];
 }
