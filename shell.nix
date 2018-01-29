@@ -5,7 +5,7 @@ in
 with pkgs;
 
 mkShell {
-  mergeInputs = [
+  inputsFrom = [
     frontend
     backend
   ];
