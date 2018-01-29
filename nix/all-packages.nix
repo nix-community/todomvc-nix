@@ -12,8 +12,6 @@ with super;
 
   fetchJSON = self.callPackage ./build-support/fetch-json.nix {};
 
-  mkShell = self.callPackage ./build-support/mk-shell.nix {};
-
   yarn2nix-src = self.fetchJSON ./yarn2nix-src.json;
 
   yarn2nix = self.callPackage self.yarn2nix-src {};
