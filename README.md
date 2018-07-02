@@ -1,5 +1,7 @@
 # TodoMVC w/ JavaScript frontend and Haskell backend
 
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 This project build can be demonstrates how a project can be nixified. The service itself has been cobbled-up together using the https://www.todobackend.com/ and isn't the interesting bit.
 
 What's interesting is how to put together the nix/ folder, look at the git commit history it should be fairly logical.
