@@ -6,7 +6,7 @@ self: super:
 with super;
 
 {
-  lib = super.lib // {
+  lib = lib // {
     path = self.callPackage ./lib/path.nix { };
   };
 
