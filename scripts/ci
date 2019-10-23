@@ -10,7 +10,7 @@ cd "$(dirname "$0")/.."
 target=nix/release.nix
 buildArgs=(
   "$target"
-  --no-out-links
+  --no-out-link
 )
 
 nix-build "${buildArgs[@]}"
