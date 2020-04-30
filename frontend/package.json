@@ -18,7 +18,7 @@
   "homepage": "https://github.com/TodoBackend/todo-backend-client",
   "dependencies": {
     "backbone": "^1.1.1",
-    "jquery": "^3.0.0",
+    "jquery": "^3.5.0",
     "todomvc-common": "^0.1.4",
     "underscore": "^1.6.0"
   }
