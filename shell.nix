@@ -1,6 +1,4 @@
-let
-  pkgs = import ./nix {};
-in
+{ pkgs ? import <nixpkgs> {} }:
 
 with pkgs;
 

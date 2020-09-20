@@ -16,5 +16,5 @@ mkYarnPackage {
     cp -r dist/ $out/var/www
   '';
 
-  shellHook = linkNodeModulesHook;
+#   shellHook = linkNodeModulesHook;
 }
