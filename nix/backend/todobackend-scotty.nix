@@ -4,7 +4,7 @@
 mkDerivation {
   pname = "todobackend-scotty";
   version = "0.1.0.0";
-  src = ../../backend/todobackend-scotty;
+  src = ../../backend/haskell/todobackend-scotty;
   isLibrary = false;
   isExecutable = true;
   enableSharedExecutables = false;

@@ -6,7 +6,7 @@
 mkDerivation {
   pname = "todobackend-common";
   version = "0.1.0.0";
-  src = ../../backend/todobackend-common;
+  src = ../../backend/haskell/todobackend-common;
   libraryHaskellDepends = [
     aeson base http-types monad-logger path-pieces persistent
     persistent-sqlite persistent-template resourcet text transformers

@@ -22,7 +22,7 @@ with super;
 
   frontend-docker = self.callPackage ./frontend/docker.nix {};
 
-  haskellPackages = self.callPackage ./backend {};
+  haskellPackages = self.callPackage ./backend/haskell.nix {};
 
   backend = self.haskellPackages.todobackend-scotty;
 
