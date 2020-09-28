@@ -1,34 +1,33 @@
 /**
  * This is an overlay with all the packages and overrides for this repo.
  */
-self: super:
+{ callPackage }:
+rec {
+#   lib = lib // {
+#     path = self.callPackage ./lib/path.nix { };
+#   };
 
-with super;
+#   fetchJSON = self.callPackage ./build-support/fetch-json.nix {};
 
-{
-  lib = lib // {
-    path = self.callPackage ./lib/path.nix { };
-  };
+#   yarn2nix-src = self.fetchJSON ./yarn2nix-src.json;
 
-  fetchJSON = self.callPackage ./build-support/fetch-json.nix {};
+#   yarn2nix = self.callPackage self.yarn2nix-src {};
 
-  yarn2nix-src = self.fetchJSON ./yarn2nix-src.json;
+#   inherit (self.yarn2nix) mkYarnPackage linkNodeModulesHook;
 
-  yarn2nix = self.callPackage self.yarn2nix-src {};
+#   frontend = self.callPackage ./frontend {};
 
-  inherit (self.yarn2nix) mkYarnPackage linkNodeModulesHook;
+#   frontend-docker = self.callPackage ./frontend/docker.nix {};
+  recurseForDerivations = true;
 
-  frontend = self.callPackage ./frontend {};
+  haskellPackages = callPackage ./backend/haskell.nix {};
 
-  frontend-docker = self.callPackage ./frontend/docker.nix {};
+  backend = haskellPackages.todobackend-scotty;
 
-  haskellPackages = self.callPackage ./backend/haskell.nix {};
+  backend-docker = callPackage ./backend/docker.nix { inherit backend; };
 
-  backend = self.haskellPackages.todobackend-scotty;
-
-  backend-docker = self.callPackage ./backend/docker.nix {};
-
-  scripts = {
-    run = callPackage ./scripts/run.nix { };
-  };
+  pkgs = callPackage ./pkgs {};
+#   scripts = {
+#     run = callPackage ./scripts/run.nix { };
+#   };
 }

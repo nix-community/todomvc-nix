@@ -4,7 +4,7 @@ with pkgs;
 
 mkShell {
   inputsFrom = [
-    frontend
+    # frontend
     backend
   ];
 

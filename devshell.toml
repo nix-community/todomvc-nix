@@ -1,0 +1,15 @@
+name = "todomvc"
+
+packages = [
+    "todomvc.nix.backend",
+	"binutils",
+	"gcc",
+	"mdsh",
+	"todomvc.nix.pkgs.rust",
+    "haskellPackages.ghc",
+    "go",
+    "gopls",
+    "gopkgs",
+    "gocode",
+    "go-outline",
+]

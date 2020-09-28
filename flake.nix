@@ -1,10 +1,20 @@
 {
   description = "todomvc-nix";
   inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.devshell.url = "github:numtide/devshell";
+  inputs.mozilla-overlay = {
+    type = "github";
+    owner = "mozilla";
+    repo = "nixpkgs-mozilla";
+    flake = false;
+  };
 
-
-  outputs = { self, nixpkgs, flake-utils }:
-  (
+  outputs = { self, nixpkgs,  mozilla-overlay, flake-utils, devshell }:
+    {
+      overlay = import ./overlay.nix;
+    }
+    //
+    (
       flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
         let
           pkgs = import nixpkgs {
@@ -15,19 +25,32 @@
             };
             overlays = [
                 # all the packages are defined there:
-                (import ./nix/all-packages.nix)
+                # (import ./nix/all-packages.nix)
+                (import mozilla-overlay)
+                devshell.overlay
+                self.overlay
             ];
           };
         #   import ./nix { nixpkgsSrc = nixpkgs; };
         in
         {
-          legacyPackages = pkgs.backend;
+          legacyPackages = pkgs.todomvc.nix;
 
-          defaultPackage = pkgs.backend;
+          defaultPackage = pkgs.todomvc.nix.backend;
 
-          packages = flake-utils.lib.flattenTree pkgs.backend;
+          packages = flake-utils.lib.flattenTree pkgs.todomvc.nix;
 
-          devShell = import ./shell.nix { inherit pkgs; };
+          devShell =
+            pkgs.mkDevShell.fromTOML ./devshell.toml;
+            # //
+            # {
+            #     shellHook = ''
+            #       export GO111MODULE=on
+            #       export Andika=Andika
+            #       unset GOPATH GOROOT
+            #     '';
+            # };
+        #   import ./shell.nix { inherit pkgs; };
 
           # Additional checks on top of the packages
           checks = { };
