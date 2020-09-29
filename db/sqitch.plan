@@ -2,3 +2,4 @@
 %project=todomvc-nix
 %uri=https://github.com/numtide/todomvc-nix
 
+todoschema 2020-09-29T14:36:58Z todomvc_dbuser <todomvc_dbuser@todomvc-nix.com> # Add todomvc.todo table.

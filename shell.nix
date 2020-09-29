@@ -65,6 +65,7 @@ mkDevShell {
     postgresql
     # todomvc.nix.pkgs.postgresql.
     moreutils
+    perlPackages.TemplateToolkit
   ];
 
 }

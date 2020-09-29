@@ -1,0 +1,6 @@
+BEGIN;
+
+SET search_path TO [% IF schema ][% schema %],[% END %]public;
+DROP TABLE [% IF table %][% table %][% ELSE %][% change %][% END %];
+
+COMMIT;
