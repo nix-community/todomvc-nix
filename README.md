@@ -24,3 +24,8 @@ I didn't have the time to implement everything. Here are the missing bits:
 * improve the `nix-shell` experience
 
 Let me know if you want to see any of these happening.
+
+## Credits
+Most of the code that we put in this repo has previously been made by others. Here we credit the repository that we take the code from:
+- [deckdeckgo](https://github.com/deckgo/deckdeckgo)
+

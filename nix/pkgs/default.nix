@@ -1,5 +1,5 @@
 { pkgs }:
-with pkgs;
 {
-  rust = callPackage ./rust { };
+  rust = pkgs.callPackage ./rust { };
+  postgresql = pkgs.callPackage ./postgresql {};
 }

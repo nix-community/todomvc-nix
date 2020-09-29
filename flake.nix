@@ -24,14 +24,11 @@
                 allowBroken = true;
             };
             overlays = [
-                # all the packages are defined there:
-                # (import ./nix/all-packages.nix)
                 (import mozilla-overlay)
                 devshell.overlay
                 self.overlay
             ];
           };
-        #   import ./nix { nixpkgsSrc = nixpkgs; };
         in
         {
           legacyPackages = pkgs.todomvc.nix;
@@ -40,19 +37,9 @@
 
           packages = flake-utils.lib.flattenTree pkgs.todomvc.nix;
 
-          devShell =
-            pkgs.mkDevShell.fromTOML ./devshell.toml;
-            # //
-            # {
-            #     shellHook = ''
-            #       export GO111MODULE=on
-            #       export Andika=Andika
-            #       unset GOPATH GOROOT
-            #     '';
-            # };
-        #   import ./shell.nix { inherit pkgs; };
+          devShell = import ./shell.nix { inherit pkgs; };
+          # pkgs.mkDevShell.fromTOML ./devshell.toml;
 
-          # Additional checks on top of the packages
           checks = { };
         }
       )

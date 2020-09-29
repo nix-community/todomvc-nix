@@ -1,15 +1,41 @@
 name = "todomvc"
 
 packages = [
-    "todomvc.nix.backend",
-	"binutils",
-	"gcc",
-	"mdsh",
+    # build tools
+    ### Rust
 	"todomvc.nix.pkgs.rust",
+    ### Haskell
     "haskellPackages.ghc",
+    ### Go
     "go",
     "gopls",
     "gopkgs",
     "gocode",
     "go-outline",
+    ### Others
+    "binutils",
+	"gcc",
+
+    # backend
+    "todomvc.nix.backend",
+
+    # frontend
+
+    # database
+    "sqitchPg",
+    "postgresql",
+    "moreutils",
+
 ]
+
+[env]
+PGHOST="localhost"
+PGPORT="5432"
+PGDATABASE="test_db"
+PGUSER="test_user"
+PGPASSWORD="test_pass"
+
+[bash]
+extra = """
+  unset GOPATH GOROOT
+"""
