@@ -9,13 +9,18 @@ mkDevShell {
     {
       name = "pgstart";
       help = "start psql service";
-      command = "${todomvc.nix.pkgs.postgresql.pgutil.start_pg} || echo '''PG start failed''' ";
+      command = "${todomvc.nix.pkgs.database.pgutil.start_pg} || echo '''PG start failed''' ";
     }
     {
       name = "pgstop";
       help = "stop psql service";
-      command = "${todomvc.nix.pkgs.postgresql.pgutil.stop_pg} || echo '''PG start failed''' ";
+      command = "${todomvc.nix.pkgs.database.pgutil.stop_pg} || echo '''PG start failed''' ";
     }
+    # {
+    #   name = "migrate";
+    #   help = "migrate database using sqitch";
+    #   command = "${todomvc.nix.pkgs.database.migrate}/bin/sqitch || echo '''Migrate database failed''' ";
+    # }
   ];
 
   bash = {
@@ -61,11 +66,11 @@ mkDevShell {
     # frontend
 
     # database
-    sqitchPg
+    #sqitchPg
     postgresql
     # todomvc.nix.pkgs.postgresql.
+    todomvc.nix.pkgs.database.migrate
     moreutils
-    perlPackages.TemplateToolkit
   ];
 
 }
