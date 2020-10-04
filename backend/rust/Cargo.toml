@@ -3,21 +3,25 @@ name = "rust-backend"
 version = "0.1.0"
 authors = ["Andika Demas Riyandi <andika.riyan@gmail.com>"]
 edition = "2018"
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.32"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 log = "0.4.8"
 pretty_env_logger = "0.4.0"
 tide = "0.13.0"
-ructe = { version = "0.12", features = ["sass", "tide013"] }
+http-types = "2.5.0"
 async-std = { version = "1.6.0", features = ["attributes"] }
-sqlx = { version = "0.4.0-beta.1", features = [ "postgres" ] }
-rust-common = { path = "../../common/rust/", optional=false }
-openssl = "0.10.30"
+sqlx = { version = "0.3.5", features = [ "postgres" ] }
+common = { path = "../../common/rust/", optional=false }
+openssl = { version = "0.10.30", features = [ "vendored" ] }
 env_logger = "0.7.1"
 uuid = "0.8.1"
 dotenv = "0.15.0"
 
+[build-dependencies]
+ructe = { version = "0.12", features = ["sass", "tide013"] }

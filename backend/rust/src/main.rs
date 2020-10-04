@@ -4,18 +4,43 @@ extern crate serde;
 extern crate env_logger;
 extern crate uuid;
 extern crate log;
+
+mod ructe_tide;
+
+use ructe_tide::{Render, RenderBuilder};
 use async_std::task;
-use tide::Request;
-use tide::StatusCode;
+use tide::{Next, Request, Response, StatusCode};
 use sqlx::postgres::PgPool;
 use std::env;
 use dotenv::dotenv;
 
-#[async_std::main]
-async fn main() -> Result<(), std::io::Error> {
-    tide::log::start();
-    let mut app = tide::new();
-    app.at("/").get(|_| async { Ok("Hello, world!") });
-    app.listen("127.0.0.1:8183").await?;
-    Ok(())
+mod model;
+mod routes;
+mod api;
+
+#[derive(Debug, Clone)]
+pub struct AppState {
+    pub db_pool: PgPool
 }
+
+fn main() -> anyhow::Result<()> {
+    dotenv().ok();
+    tide::log::start();
+    task::block_on(async {
+        let pool = PgPool::new(&env::var("DATABASE_URL")?).await?;
+        let state = AppState {
+            db_pool: pool.clone()
+        };
+        let mut app = crate::routes::routes(state.clone());
+        // app.at("/static").serve_dir("./client/pkg/")?;
+        app.listen("127.0.0.1:8183").await?;
+        Ok(())
+    })
+}
+async fn index(_req: Request<AppState>)->tide::Result{
+    Ok(Response::builder(StatusCode::Ok)
+    .render_html(|o| templates::index(o, String::from("todomvc-nix")))
+    .build())
+}
+
+include!(concat!(env!("OUT_DIR"), "/templates.rs"));
