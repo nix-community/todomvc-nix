@@ -22,6 +22,9 @@
             # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
             config = {
                 allowBroken = true;
+                permittedInsecurePackages = [
+                  "openssl-1.0.2u"
+                ];
             };
             overlays = [
                 (import mozilla-overlay)

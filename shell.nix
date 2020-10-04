@@ -7,6 +7,11 @@ mkDevShell {
   motd = "otherthing";
   commands = [
     {
+      name = "pginit";
+      help = "init psql service";
+      command = "${todomvc.nix.pkgs.database.pgutil.init_pg} || echo '''PG init failed''' ";
+    }
+    {
       name = "pgstart";
       help = "start psql service";
       command = "${todomvc.nix.pkgs.database.pgutil.start_pg} || echo '''PG start failed''' ";
@@ -14,7 +19,7 @@ mkDevShell {
     {
       name = "pgstop";
       help = "stop psql service";
-      command = "${todomvc.nix.pkgs.database.pgutil.stop_pg} || echo '''PG start failed''' ";
+      command = "${todomvc.nix.pkgs.database.pgutil.stop_pg} || echo '''PG stop failed''' ";
     }
     {
       name = "migrate";
@@ -34,6 +39,7 @@ mkDevShell {
   env = {
     RUST_SRC_PATH="${todomvc.nix.pkgs.rust}";
     CARGO="${todomvc.nix.pkgs.rust}/cargo";
+    DATABASE_URL="127.0.0.1:5432";
     PGHOST="localhost";
     PGPORT="5432";
     PGDATABASE="todomvc_db";
@@ -57,8 +63,7 @@ mkDevShell {
     go-outline
 
     ### Others
-    binutils
-	gcc
+    glibc
 
     # backend
     todomvc.nix.backend
