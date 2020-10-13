@@ -38,13 +38,15 @@ mkDevShell {
 
   env = {
     RUST_SRC_PATH="${todomvc.nix.pkgs.rust}";
+    RUSTFLAGS="-C linker=${lld_9}/bin/lld";
     CARGO="${todomvc.nix.pkgs.rust}/cargo";
-    DATABASE_URL="127.0.0.1:5432";
+    DATABASE_URL="postgresql://todomvc_dbuser:todomvc_dbpass@localhost:5432/todomvc_db";
     PGHOST="localhost";
     PGPORT="5432";
     PGDATABASE="todomvc_db";
-    PGUSER="todomvc_dbuser";
+    PGUSER="todomvc_dbuser";s
     PGPASSWORD="todomvc_dbpass";
+    LD_LIBRARY_PATH="${stdenv.cc.cc.lib}/lib64:\$LD_LIBRARY_PATH";
   };
 
   packages = [
@@ -69,6 +71,9 @@ mkDevShell {
     todomvc.nix.backend
 
     # frontend
+    yarn
+    yarn2nix
+    wasm-pack
 
     # database
     #sqitchPg

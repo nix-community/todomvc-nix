@@ -1,0 +1,23 @@
+{
+    "name": "rust",
+    "version": "0.1.0",
+    "description": "frontend wasm in rust",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "start": "yarn run todo_backend && yarn run todo_watch",
+        "todo_backend": "cd ../../backend/rust && cargo run",
+        "todo_watch": "yarn run todo_clean && rollup --config --watch",
+        "todo_clean": "rimraf ./dist"
+    },
+    "dependencies": {
+        "@wasm-tool/rollup-plugin-rust": "^1.0.5"
+    },
+    "devDependencies": {
+        "rimraf": "^3.0.2",
+        "rollup": "^2.29.0",
+        "rollup-plugin-livereload": "^2.0.0",
+        "rollup-plugin-serve": "^1.0.4",
+        "wasm-pack": "^0.9.1"
+    }
+}

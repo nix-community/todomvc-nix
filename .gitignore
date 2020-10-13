@@ -2,3 +2,4 @@ result
 result-*
 *.sqlite3
 target
+node_modules/

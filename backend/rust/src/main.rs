@@ -1,9 +1,7 @@
 extern crate tide;
 extern crate async_std;
 extern crate serde;
-extern crate env_logger;
 extern crate uuid;
-extern crate log;
 
 mod ructe_tide;
 
@@ -25,7 +23,7 @@ pub struct AppState {
 
 fn main() -> anyhow::Result<()> {
     dotenv().ok();
-    tide::log::start();
+    tide::log::with_level(tide::log::max_level());
     task::block_on(async {
         let pool = PgPool::new(&env::var("DATABASE_URL")?).await?;
         let state = AppState {

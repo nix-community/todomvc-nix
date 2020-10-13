@@ -1,10 +1,32 @@
 [package]
 name = "rust-frontend"
 version = "0.1.0"
+categories = ["wasm"]
 authors = ["Andika Demas Riyandi <andika.riyan@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+crate-type = ["cdylib"]
+
 [dependencies]
 common = { path = "../../common/rust/" }
+console_error_panic_hook = "0.1.5"
+lazy_static = "1.4.0"
+dominator = "0.5.12"
+futures-core = "0.3.0"
+futures-util = "0.3.0"
+futures-signals = "0.3.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+wasm-bindgen = { version = "0.2.68", features = [ "serde-serialize" ] }
+wasm-bindgen-futures = "0.4.18"
+
+[dependencies.web-sys]
+version = "0.3.45"
+features = [
+    "Storage",
+    "Url",
+    "XmlHttpRequest",
+]

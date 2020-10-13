@@ -9,5 +9,6 @@ pub fn routes(state: AppState)->tide::Server<AppState>{
     app.at("/rstodos/:todo_id").get(api::get_todo);
     app.at("/rstodos/:todo_id").delete(api::delete_todo);
     app.at("/rstodos/:todo_id").patch(api::patch_todo);
+    app.with(tide::log::LogMiddleware::new());
     app
 }
