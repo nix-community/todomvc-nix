@@ -37,16 +37,12 @@ mkDevShell {
   };
 
   env = {
-    RUST_SRC_PATH="${todomvc.nix.pkgs.rust}";
-    RUSTFLAGS="-C linker=${lld_9}/bin/lld";
-    CARGO="${todomvc.nix.pkgs.rust}/cargo";
     DATABASE_URL="postgresql://todomvc_dbuser:todomvc_dbpass@localhost:5432/todomvc_db";
     PGHOST="localhost";
     PGPORT="5432";
     PGDATABASE="todomvc_db";
-    PGUSER="todomvc_dbuser";s
+    PGUSER="todomvc_dbuser";
     PGPASSWORD="todomvc_dbpass";
-    LD_LIBRARY_PATH="${stdenv.cc.cc.lib}/lib64:\$LD_LIBRARY_PATH";
   };
 
   packages = [
@@ -59,26 +55,27 @@ mkDevShell {
 
     ### Go
     go
-    gopls
+    # gopls
     gopkgs
     gocode
     go-outline
 
     ### Others
+    binutils
+    gcc
     glibc
 
     # backend
-    todomvc.nix.backend
+    # todomvc.nix.backend
 
     # frontend
+    nodejs-12_x
     yarn
-    yarn2nix
-    wasm-pack
+    # yarn2nix
+    # wasm-pack
 
     # database
-    #sqitchPg
     postgresql
-    # todomvc.nix.pkgs.postgresql.
     moreutils
   ];
 

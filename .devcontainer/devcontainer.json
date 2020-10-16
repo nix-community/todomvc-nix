@@ -1,0 +1,56 @@
+{
+    "name": "todomvc-nix",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "dev",
+    "workspaceFolder": "/workspace",
+    "runArgs": [
+        // "-u",
+        // "vscode",
+        "--cap-add=SYS_PTRACE",
+        "--security-opt",
+        "seccomp=unconfined"
+    ],
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "terminal.integrated.shellArgs.linux": [
+            "-l"
+        ],
+        "rust-client.disableRustup": true,
+        "rust-client.autoStartRls": false,
+        "rust-analyzer.linkedProjects": [
+            "backend/rust/Cargo.toml",
+            "common/rust/Cargo.toml",
+            "frontend/rust/Cargo.toml"
+        ],
+        "rust-analyzer.rustfmt.extraArgs": [
+            "--config-path=backend/rust",
+            "--config-path=common/rust",
+            "--config-path=frontend/rust",
+        ]
+    },
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "hashicorp.terraform",
+        "ms-vscode.go",
+        "matklad.rust-analyzer",
+        "rust-lang.rust",
+        "bbenoist.nix",
+        "rubymaniac.vscode-direnv"
+    ],
+    "remoteEnv": {
+        "USER": "user"
+    },
+    //"postCreateCommand": ""
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [
+    //     "1111:1112"
+    // ],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "",
+    // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "user",
+    "updateRemoteUserUID": false,
+    //"remoteUser": "vscode"
+    "shutdownAction": "stopCompose"
+}

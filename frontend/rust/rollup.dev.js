@@ -3,28 +3,37 @@ import livereload from "rollup-plugin-livereload";
 import serve from "rollup-plugin-serve";
 
 export default {
-    input: "./Cargo.toml",
+    input: {
+        index: 'Cargo.toml'
+    },
     output: {
-        dir: "dist/js/",
+        dir: "devhtml/js",
         format: "iife",
-        sourcemap: true,
+        sourcemap: true
     },
     plugins: [
-
         rust({
-            serverPath: "js/",
+            serverPath: "/js/",
             debug: true,
+            verbose: true,
             watchPatterns: ["src/**"],
-            cargoArgs: ["--features", "local quiet"],
-            watch: true,
+            cargoArgs: ["--features", "develop"],
         }),
 
         serve({
-            contentBase: "dist",
+            contentBase: 'devhtml',
             open: true,
+            verbose: true,
             historyApiFallback: true,
         }),
 
-        livereload("dist"),
+        livereload({
+            watch: 'devhtml/js',
+            verbose: true
+
+        })
     ],
+    watch: {
+        clearScreen: false
+    }
 };

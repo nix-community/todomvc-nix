@@ -8,6 +8,15 @@
     repo = "nixpkgs-mozilla";
     flake = false;
   };
+  inputs.nixpkgs.url ="github:NixOS/nixpkgs/master";
+#   inputs.nixpkgs = {
+#       #"github:NixOS/nixpkgs/master";
+#     type = "github";
+#     owner = "nixos";
+#     repo = "nixpkgs";
+#     rev = "master";
+#     flake = false;
+#   };
 
   outputs = { self, nixpkgs,  mozilla-overlay, flake-utils, devshell }:
     {

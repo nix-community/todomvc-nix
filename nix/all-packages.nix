@@ -20,11 +20,11 @@ rec {
 #   frontend-docker = self.callPackage ./frontend/docker.nix {};
   recurseForDerivations = true;
 
-  haskellPackages = callPackage ./backend/haskell.nix {};
+#   haskellPackages = callPackage ./backend/haskell.nix {};
 
-  backend = haskellPackages.todobackend-scotty;
+#   backend = haskellPackages.todobackend-scotty;
 
-  backend-docker = callPackage ./backend/docker.nix { inherit backend; };
+#   backend-docker = callPackage ./backend/docker.nix { inherit backend; };
 
   pkgs = callPackage ./pkgs {};
 #   scripts = {

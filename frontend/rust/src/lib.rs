@@ -57,14 +57,6 @@ impl State {
                     }))
                 }),
 
-                html!("button", {
-                    .class(&*BUTTON_CLASS)
-                    .text("Decrease")
-                    .event(clone!(state => move |_: events::Click| {
-                        // Decrement the counter
-                        state.counter.replace_with(|x| *x - 1);
-                    }))
-                }),
 
                 html!("button", {
                     .class(&*BUTTON_CLASS)
