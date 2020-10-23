@@ -9,6 +9,8 @@ export default {
     output: {
         dir: "devhtml/js",
         format: "iife",
+        chunkFileNames: "[name].js",
+        assetFileNames: "assets/[name][extname]",
         sourcemap: true
     },
     plugins: [
@@ -24,7 +26,7 @@ export default {
             contentBase: 'devhtml',
             open: true,
             verbose: true,
-            historyApiFallback: true,
+            // historyApiFallback: true,
         }),
 
         livereload({

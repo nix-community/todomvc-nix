@@ -22,8 +22,13 @@ pub struct AppState {
 }
 
 fn main() -> anyhow::Result<()> {
-    dotenv().ok();
-    tide::log::with_level(tide::log::max_level());
+    #[cfg(debug_assertions)]
+    tide::log::start();
+
+    // #[cfg(debug_assertions)]
+    // tide::log::with_level(tide::log::max_level());
+    tide::log::info!("Hello world");
+
     task::block_on(async {
         let pool = PgPool::new(&env::var("DATABASE_URL")?).await?;
         let state = AppState {

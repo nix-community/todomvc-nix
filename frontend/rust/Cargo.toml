@@ -13,10 +13,12 @@ crate-type = ["cdylib"]
 [dependencies]
 common = { path = "../../common/rust/" }
 console_error_panic_hook = { version = "0.1.5", optional = true }
+cfg-if = "1.0"
+js-sys = "0.3.45"
 lazy_static = "1.4.0"
+log = "0.4.11"
 dominator = "0.5.12"
-futures-core = "0.3.0"
-futures-util = "0.3.0"
+futures = "0.3.6"
 futures-signals = "0.3.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -30,6 +32,11 @@ features = [
     "Storage",
     "Url",
     "XmlHttpRequest",
+    "Headers",
+    "Response",
+    "RequestInit",
+    "RequestMode",
+    "Window"
 ]
 
 [features]

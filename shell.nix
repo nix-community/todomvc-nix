@@ -55,13 +55,15 @@ mkDevShell {
 
     ### Go
     go
-    # gopls
+    gopls
     gopkgs
     gocode
     go-outline
 
     ### Others
     binutils
+    pkgconfig
+    openssl
     gcc
     glibc
 

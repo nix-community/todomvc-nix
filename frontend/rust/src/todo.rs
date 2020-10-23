@@ -1,58 +1,69 @@
 use std::rc::Rc;
 
 use wasm_bindgen::prelude::*;
+use wasm_bindgen_futures::{spawn_local};
+
 use serde::{Serialize, Deserialize};
 use futures_signals::map_ref;
 use futures_signals::signal::{SignalExt, Mutable};
 use dominator::{Dom, html, clone, events, with_node};
 
-use crate::app::App;
+use common::{TodoResponse};
+
+use crate::app::{App, trim};
 use crate::routing::Route;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Todo {
-    id: u32,
-    title: Mutable<String>,
+    pub id: i32,
+    pub title: Mutable<String>,
     pub completed: Mutable<bool>,
 
     #[serde(skip)]
-    editing: Mutable<Option<String>>,
+    pub editing: Mutable<Option<String>>,
+    pub orderx: Mutable<i32>
+}
+
+
+pub fn response_to_todo(tr: TodoResponse) -> Rc<Todo> {
+    let todo = Todo::new(tr.id, tr.title, tr.orderx);
+    todo.completed.set(tr.completed);
+    todo
 }
 
 impl Todo {
-    pub fn new(id: u32, title: String) -> Rc<Self> {
+    pub fn new(id: i32, title: String, orderx: i32) -> Rc<Self> {
         Rc::new(Self {
             id: id,
             title: Mutable::new(title),
             completed: Mutable::new(false),
             editing: Mutable::new(None),
+            orderx: Mutable::new(orderx)
         })
     }
 
-    fn set_completed(&self, app: &App, completed: bool) {
+    async fn set_completed(self: Rc<Self>, app: Rc<App>, completed: bool) {
         self.completed.set_neq(completed);
-        app.serialize();
+        app.patch_todo(self).await.ok();
     }
 
-    fn remove(&self, app: &App) {
-        app.remove_todo(&self);
-        app.serialize();
+    async fn remove(self: Rc<Self>, app: Rc<App>) {
+        app.remove_todo(self).await;
     }
 
     fn cancel_editing(&self) {
         self.editing.set_neq(None);
     }
 
-    fn done_editing(&self, app: &App) {
+    async fn done_editing(self: Rc<Self>, app: Rc<App>) {
         if let Some(title) = self.editing.replace(None) {
             if let Some(title) = trim(&title) {
                 self.title.set_neq(title);
-
             } else {
-                app.remove_todo(&self);
+                app.clone().remove_todo(self.clone()).await;
+                return ()
             }
-
-            app.serialize();
+            app.clone().patch_todo(self.clone()).await.ok().unwrap_throw();
         }
     }
 
@@ -83,7 +94,7 @@ impl Todo {
                             .property_signal("checked", todo.completed.signal())
 
                             .event(clone!(todo, app => move |event: events::Change| {
-                                todo.set_completed(&app, event.checked().unwrap_throw());
+                                spawn_local(todo.clone().set_completed(app.clone(), event.checked().unwrap_throw()));
                             }))
                         }),
 
@@ -98,7 +109,7 @@ impl Todo {
                         html!("button", {
                             .class("destroy")
                             .event(clone!(todo, app => move |_: events::Click| {
-                                todo.remove(&app);
+                                spawn_local(todo.clone().remove(app.clone()));
                             }))
                         }),
                     ])
@@ -137,7 +148,7 @@ impl Todo {
 
                     // TODO global_event ?
                     .event(clone!(todo, app => move |_: events::Blur| {
-                        todo.done_editing(&app);
+                        spawn_local(todo.clone().done_editing(app.clone()));
                     }))
                 }),
             ])

@@ -15,3 +15,8 @@ pub struct TodoAction {
     pub completed: bool,
     pub orderx: i32,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct TodoCompletion {
+    pub all_complete: bool
+}

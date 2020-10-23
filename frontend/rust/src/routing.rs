@@ -28,7 +28,7 @@ impl Route {
         match self {
             Route::Active => "#/active",
             Route::Completed => "#/completed",
-            Route::All => "#/",
+            Route::All => "/",
         }
     }
 }

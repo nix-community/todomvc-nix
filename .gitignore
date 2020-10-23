@@ -3,4 +3,4 @@ result-*
 *.sqlite3
 target
 node_modules/
-*/devhtml/js
+frontend/rust/devhtml/js/

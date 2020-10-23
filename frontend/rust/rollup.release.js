@@ -8,12 +8,14 @@ export default {
         dir: "devhtml/js",
         format: "iife",
         sourcemap: true,
+        chunkFileNames: "[name]-[hash].js",
+        assetFileNames: "assets/[name]-[extname]",
     },
     plugins: [
         rust({
             serverPath: "/js/",
             debug: true,
-            cargoArgs: ["--features", "local quiet"],
+            cargoArgs: ["--features", "develop"],
         }),
     ],
 };
