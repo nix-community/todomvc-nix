@@ -89,7 +89,7 @@ impl Todo {
                     .children(&mut [
                         html!("input", {
                             .attribute("type", "checkbox")
-                            .class("toggle")
+                            .class(["toggle", "form-checkbox", "m-2"])
 
                             .property_signal("checked", todo.completed.signal())
 
@@ -99,6 +99,7 @@ impl Todo {
                         }),
 
                         html!("label", {
+                            .class(["h4","m-1"])
                             .event(clone!(todo => move |_: events::DoubleClick| {
                                 todo.editing.set_neq(Some(todo.title.get_cloned()));
                             }))
@@ -107,7 +108,9 @@ impl Todo {
                         }),
 
                         html!("button", {
-                            .class("destroy")
+                            .class(["destroy","close-button"])
+                            .attribute("type", "button")
+                            .text("X")
                             .event(clone!(todo, app => move |_: events::Click| {
                                 spawn_local(todo.clone().remove(app.clone()));
                             }))

@@ -5,12 +5,11 @@ extern crate uuid;
 
 mod ructe_tide;
 
-use ructe_tide::{Render, RenderBuilder};
+use ructe_tide::{RenderBuilder};
 use async_std::task;
-use tide::{Next, Request, Response, StatusCode};
+use tide::{Request, Response, StatusCode};
 use sqlx::postgres::PgPool;
 use std::env;
-use dotenv::dotenv;
 
 mod model;
 mod routes;
@@ -34,7 +33,7 @@ fn main() -> anyhow::Result<()> {
         let state = AppState {
             db_pool: pool.clone()
         };
-        let mut app = crate::routes::routes(state.clone());
+        let app = crate::routes::routes(state.clone());
         // app.at("/static").serve_dir("./client/pkg/")?;
         app.listen("127.0.0.1:8183").await?;
         Ok(())

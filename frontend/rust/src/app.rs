@@ -8,11 +8,10 @@ use wasm_bindgen::JsValue;
 
 use futures_signals::signal::{Signal, SignalExt, Mutable};
 use futures_signals::signal_vec::{SignalVec, SignalVecExt, MutableVec};
-use dominator::{Dom, text_signal, html, clone, events, link, class};
+use dominator::{Dom, text_signal, html, clone, events, link};
 
 use js_sys::Error;
 use web_sys::{window, Response, RequestInit, Headers, RequestMode};
-use lazy_static::lazy_static;
 
 use common::{TodoResponse, TodoAction, TodoCompletion};
 
@@ -373,16 +372,16 @@ impl App {
 
     fn render_header(app: Rc<Self>) -> Dom {
         html!("header", {
-            .class(["header","p-6","m-6","d-inline-flex","flex-row","width-auto","flex-justify-between","flex-wrap"])
+            .class(["header","m-6","d-inline-flex","flex-row","width-auto","flex-justify-between","flex-wrap"])
             .children(&mut [
                 html!("h1", {
                     .class(["h1","m-6","p-6","text-bold","text-center","my-lg-2","width-full"])
-                    .text("TodoMVC - Nix")
+                    .text("TodoMVC - Rust")
                 }),
 
                 html!("input", {
                     .focused(true)
-                    .class(["new-todo","form-control","mx-6","width-full"])
+                    .class(["new-todo","form-control","width-full"])
                     .attribute("placeholder", "What needs to be done?")
                     .property_signal("value", app.new_todo_title.signal_cloned())
 
@@ -402,34 +401,38 @@ impl App {
     }
 
     fn render_main(app: Rc<Self>) -> Dom {
-
         html!("section", {
-            .class("main")
+            .class(["main","my-2","mx-6","d-inline-flex","flex-column"])
             // Hide if it doesn't have any todos.
             .visible_signal(app.todo_list.signal_vec_cloned()
                 .len()
                 .map(|len| len > 0))
 
             .children(&mut [
-                html!("input", {
-                    .class("toggle-all")
-                    .attribute("id", "toggle-all")
-                    .attribute("type", "checkbox")
-                    .property_signal("checked", app.not_completed_len().map(|len| len == 0))
+                html!("div", {
+                    .class(["d-inline-flex","flex-row","flex-items-center"])
+                    .children(&mut [
+                        html!("input", {
+                            .class(["toggle-all", "form-checkbox", "m-2"])
+                            .attribute("id", "toggle-all")
+                            .attribute("type", "checkbox")
+                            .property_signal("checked", app.not_completed_len().map(|len| len == 0))
 
-                    .event(clone!(app => move |event: events::Change| {
-                        let checked = event.checked().unwrap_throw();
-                        spawn_local(app.clone().set_all_todos_completed(checked));
-                    }))
+                            .event(clone!(app => move |event: events::Change| {
+                                let checked = event.checked().unwrap_throw();
+                                spawn_local(app.clone().set_all_todos_completed(checked));
+                            }))
+                        }),
+
+                        html!("label", {
+                            .class(["h3","m-1"])
+                            .attribute("for", "toggle-all")
+                            .text("Mark all as complete")
+                        }),
+                    ])
                 }),
-
-                html!("label", {
-                    .attribute("for", "toggle-all")
-                    .text("Mark all as complete")
-                }),
-
                 html!("ul", {
-                    .class("todo-list")
+                    .class(["todo-list", "list-style-none"])
                     .children_signal_vec(app.todo_list.signal_vec_cloned()
                         .map(clone!(app => move |todo| Todo::render(todo, app.clone()))))
                 }),
@@ -450,8 +453,7 @@ impl App {
 
     fn render_footer(app: Rc<Self>) -> Dom {
         html!("footer", {
-            .class("footer")
-
+            .class(["footer","p-2","my-2","mx-6","d-inline-flex","flex-column"])
             // Hide if it doesn't have any todos.
             .visible_signal(app.todo_list.signal_vec_cloned()
                 .len()
@@ -477,7 +479,7 @@ impl App {
                 }),
 
                 html!("ul", {
-                    .class("filters")
+                    .class(["filters","list-style-none"])
                     .children(&mut [
                         Self::render_button("All", Route::All),
                         Self::render_button("Active", Route::Active),

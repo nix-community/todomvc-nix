@@ -1,11 +1,10 @@
-use tide::{Request, log};
+use tide::{Request};
 use crate::{ AppState, model::{ Todo, todos_to_tresponses, todo_to_tresponse}};
 use common::{TodoAction, TodoResponse, TodoCompletion};
-use http_types::{StatusCode, Method, Body};
-use serde::*;
+use http_types::{StatusCode, Body};
 use sqlx::postgres::PgQueryAs;
 
-pub async fn get_todos(mut req: Request<AppState>) -> tide::Result{
+pub async fn get_todos(req: Request<AppState>) -> tide::Result{
     let mut res = tide::Response::new(StatusCode::Ok);
     let s: Vec<Todo> = sqlx::query_as("SELECT * FROM todos")
         .fetch_all(&req.state().db_pool).await?;
@@ -40,7 +39,7 @@ pub async fn post_todo(mut req: Request<AppState>) -> tide::Result{
     }
 }
 
-pub async fn get_todo(mut req: Request<AppState>) -> tide::Result{
+pub async fn get_todo(req: Request<AppState>) -> tide::Result{
     let mut res = tide::Response::new(StatusCode::Ok);
     let todo_id = req.param::<i32>("todo_id")?;
     let s: Todo = sqlx::query_as("SELECT * FROM todos WHERE id = $1")
@@ -50,7 +49,7 @@ pub async fn get_todo(mut req: Request<AppState>) -> tide::Result{
     Ok(res)
 }
 
-pub async fn delete_todo(mut req: Request<AppState>) -> tide::Result {
+pub async fn delete_todo(req: Request<AppState>) -> tide::Result {
     let mut res = tide::Response::new(StatusCode::Ok);
     let todo_id = req.param::<i32>("todo_id")?;
     let delete_todo = sqlx::query("DELETE FROM todos WHERE id = $1")
@@ -71,9 +70,9 @@ pub async fn delete_todo(mut req: Request<AppState>) -> tide::Result {
     }
 }
 
-pub async fn delete_todos(mut req: Request<AppState>) -> tide::Result{
-    let mut res = tide::Response::new(StatusCode::Ok);
-    let delete_todos = sqlx::query("DELETE FROM todos where completed = true")
+pub async fn delete_todos(req: Request<AppState>) -> tide::Result{
+    let res = tide::Response::new(StatusCode::Ok);
+    let _ = sqlx::query("DELETE FROM todos where completed = true")
         .execute(&req.state().db_pool).await?;
     Ok(res)
 }

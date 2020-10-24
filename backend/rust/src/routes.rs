@@ -1,7 +1,7 @@
 use crate::{AppState, index, api};
 
 use tide::{
-    http::headers::HeaderValue, security::CorsMiddleware, security::Origin, Request, Response,
+    http::headers::HeaderValue, security::CorsMiddleware, security::Origin,
 };
 
 pub fn routes(state: AppState)->tide::Server<AppState>{

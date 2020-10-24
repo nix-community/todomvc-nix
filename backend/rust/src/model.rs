@@ -1,4 +1,4 @@
-use common::{TodoAction, TodoResponse};
+use common::{TodoResponse};
 use sqlx;
 
 #[derive(Clone, Debug, sqlx::FromRow)]

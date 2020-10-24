@@ -7,9 +7,6 @@ use crate::app::App;
 
 // use std::sync::Arc;
 use cfg_if::cfg_if;
-use lazy_static::lazy_static;
-use futures_signals::signal::{Mutable, SignalExt};
-use dominator::{Dom, class, html, clone, events};
 
 #[wasm_bindgen(start)]
 pub async fn main_js() -> Result<(), JsValue>{
