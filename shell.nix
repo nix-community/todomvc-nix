@@ -43,6 +43,7 @@ mkDevShell {
     PGDATABASE="todomvc_db";
     PGUSER="todomvc_dbuser";
     PGPASSWORD="todomvc_dbpass";
+    GO111MODULE="on";
   };
 
   packages = [
@@ -57,6 +58,8 @@ mkDevShell {
     go
     gopls
     gopkgs
+    golint
+    reflex
     gocode
     go-outline
 

@@ -10,5 +10,9 @@
         "--config-path=backend/rust",
         "--config-path=common/rust",
         "--config-path=frontend/rust",
-    ]
+    ],
+    "go.inferGopath": false,
+    "go.toolsEnvVars": {
+        "GO111MODULE": "on"
+    },
 }
