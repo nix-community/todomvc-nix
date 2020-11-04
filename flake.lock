@@ -30,6 +30,22 @@
         "type": "github"
       }
     },
+    "haskellNix": {
+      "locked": {
+        "lastModified": 1604032804,
+        "narHash": "sha256-itkc+/Chu2OXjahKKIwFn2xQonH206wWlkE3Jo5bXRk=",
+        "owner": "input-output-hk",
+        "repo": "haskell.nix",
+        "rev": "134b60e48eb2f7a7233824c83db04290496780f2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "input-output-hk",
+        "ref": "master",
+        "repo": "haskell.nix",
+        "type": "github"
+      }
+    },
     "mozilla-overlay": {
       "flake": false,
       "locked": {
@@ -66,6 +82,7 @@
       "inputs": {
         "devshell": "devshell",
         "flake-utils": "flake-utils",
+        "haskellNix": "haskellNix",
         "mozilla-overlay": "mozilla-overlay",
         "nixpkgs": "nixpkgs"
       }

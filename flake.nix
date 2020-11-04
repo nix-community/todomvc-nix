@@ -8,17 +8,10 @@
     repo = "nixpkgs-mozilla";
     flake = false;
   };
-  inputs.nixpkgs.url ="github:NixOS/nixpkgs/master";
-#   inputs.nixpkgs = {
-#       #"github:NixOS/nixpkgs/master";
-#     type = "github";
-#     owner = "nixos";
-#     repo = "nixpkgs";
-#     rev = "master";
-#     flake = false;
-#   };
+  inputs.haskellNix.url = "github:input-output-hk/haskell.nix/master";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
 
-  outputs = { self, nixpkgs,  mozilla-overlay, flake-utils, devshell }:
+  outputs = { self, nixpkgs,  mozilla-overlay, haskellNix, flake-utils, devshell }:
     {
       overlay = import ./overlay.nix;
     }
@@ -26,6 +19,7 @@
     (
       flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
         let
+          haskellNixPkgs = haskellNix.legacyPackages;
           pkgs = import nixpkgs {
             inherit system;
             # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
@@ -37,6 +31,7 @@
             };
             overlays = [
                 (import mozilla-overlay)
+                haskellNix.overlay
                 devshell.overlay
                 self.overlay
             ];

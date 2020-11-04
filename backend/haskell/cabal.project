@@ -1,0 +1,4 @@
+with-compiler: ghc-8.8.4
+packages: ./
+tests: false
+benchmarks: false

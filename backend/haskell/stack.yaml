@@ -1,6 +1,4 @@
 flags: {}
-packages:
-- todobackend-common
-- todobackend-scotty
-resolver: lts-8.23
+packages: ./.
+resolver: lts-16.20
 system-ghc: true

@@ -1,6 +1,6 @@
 BEGIN;
 
 SET search_path TO todomvc,public;
-DROP TABLE todo;
+DROP TABLE todos;
 
 COMMIT;

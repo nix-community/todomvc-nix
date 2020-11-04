@@ -1,0 +1,8 @@
+cradle:
+  cabal:
+    # - path: ./test
+    #   component: test:ase-test
+    - path: ./src
+      component: lib:todomvc
+    - path: ./app
+      component: exe:todomvc
