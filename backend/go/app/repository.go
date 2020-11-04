@@ -25,7 +25,10 @@ type postgresRepository struct {
 func NewPostgresRepository(c *Config) (*postgresRepository, error) {
 	connectionString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", c.DatabaseHost, c.DatabasePort, c.DatabaseUsername, c.DatabaseSchema, c.DatabasePassword)
 
-	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{
+		SkipDefaultTransaction: true,
+		DisableForeignKeyConstraintWhenMigrating: true,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +43,7 @@ func NewPostgresRepository(c *Config) (*postgresRepository, error) {
 func (p *postgresRepository) GetAll(ctx context.Context) ([]Todo, error) {
 	var t []todo
 
-	err := p.db.WithContext(ctx).Order(`"order" asc`).Find(&t).Error
+	err := p.db.WithContext(ctx).Order(`"orderx" asc`).Find(&t).Error
 	if err != nil {
 		return nil, err
 	}
