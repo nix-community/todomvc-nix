@@ -2,7 +2,6 @@ module Api where
 
 import Control.Monad.IO.Class ( liftIO )
 import qualified Data.Text as T
-import Data.Aeson
 import Data.Proxy
 import Database.PostgreSQL.Simple
 import Polysemy

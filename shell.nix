@@ -41,6 +41,8 @@ mkDevShell {
   bash = {
     extra = ''
       unset GOPATH GOROOT
+      export LD_INCLUDE_PATH="$DEVSHELL_DIR/include"
+      export LD_LIB_PATH="$DEVSHELL_DIR/lib"
     '';
     interactive = ''
     '';
@@ -68,7 +70,7 @@ mkDevShell {
 	todomvc.nix.rust
 
     ### haskell tools
-    (todomvc.nix.myHaskellPackages.ghcWithPackages (p: with p; [zlib]))
+    (todomvc.nix.myHaskellPackages.ghcWithPackages(p: with p; [ zlib ]))
     todomvc.nix.myHaskellPackages.cabal-install
     todomvc.nix.myHaskellPackages.stack
     todomvc.nix.myHaskellPackages.haskell-language-server
@@ -94,7 +96,7 @@ mkDevShell {
     pkgconfig
     openssl
     gcc
-    zlib.out
+    zlib.dev
     glibc
 
     # backend

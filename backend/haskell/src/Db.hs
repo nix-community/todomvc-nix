@@ -8,7 +8,6 @@ import Database.PostgreSQL.Simple.SqlQQ
 
 import Model
 import Polysemy
-import           Polysemy.Error
 import           Polysemy.Fail
 import           Polysemy.Reader
 
