@@ -15,6 +15,6 @@ main = do
   pgDb <- getEnv "PGDATABASE"
   bracket (connect defaultConnectInfo { connectUser = pgUser, connectPassword = pgPass, connectDatabase = pgDb }) close
     $ \conn -> withStdoutLogger $ \logger -> do
-      let settings = defaultSettings & setPort 8181 & setLogger logger
-      putStrLn "Server starting on port 8181..."
+      let settings = defaultSettings & setPort 8186 & setLogger logger
+      putStrLn "Server starting on port 8186..."
       runSettings settings (createApp conn)

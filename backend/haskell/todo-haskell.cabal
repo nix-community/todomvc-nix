@@ -23,6 +23,7 @@ common core
       aeson
     , aeson-pretty
     , base                       ^>=4.13.0.0
+    , http-types
     , lens
     , polysemy                   ^>=1.3.0.0
     , polysemy-plugin            ^>=0.2.5.0
@@ -30,7 +31,9 @@ common core
     , servant-server
     , text
     , unliftio
+    , wai
     , wai-logger
+    , wai-extra
     , warp
 
 
@@ -69,7 +72,7 @@ common core
 library
   import:           core
   exposed-modules:
-    TodoMain Api Db Model
+    TodoMain Api Db Model Utils
   hs-source-dirs:   src
   default-language: Haskell2010
 

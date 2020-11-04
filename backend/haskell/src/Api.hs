@@ -13,8 +13,9 @@ import Servant
 
 import Db
 import Model
+import Utils
 
-type TodoApi = "hstodo"  :>
+type TodoApi = "hstodos"  :>
   (    Summary "Insert Todo" :> ReqBody '[JSON] TodoAction :> Post '[JSON] Int
   :<|> Summary "Get Todo" :> Capture "todoId" Int :> Get '[JSON] TodoResponse
   :<|> Summary "Get All Todo" :> Get '[JSON] [TodoResponse]
@@ -72,5 +73,5 @@ toHandler conn app = do
       Right s    -> return s
 
 createApp :: Connection -> Application
-createApp conn = serve (Proxy :: Proxy TodoApi)
+createApp conn = allowCors $ allowOptions $ serve (Proxy :: Proxy TodoApi)
                        (hoistServer (Proxy :: Proxy TodoApi) (toHandler conn) todoApi)
