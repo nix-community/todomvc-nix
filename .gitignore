@@ -4,3 +4,4 @@ result-*
 target
 node_modules/
 frontend/rust/devhtml/js/
+.direnv/

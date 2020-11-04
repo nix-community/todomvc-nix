@@ -2,7 +2,7 @@ cradle:
   cabal:
     # - path: ./test
     #   component: test:ase-test
-    - path: ./src
-      component: lib:todomvc
-    - path: ./app
-      component: exe:todomvc
+    - path: "./src"
+      component: "lib:todo-haskell"
+    - path: "./app"
+      component: "exe:todo-haskell"

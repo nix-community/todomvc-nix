@@ -71,6 +71,9 @@ mkDevShell {
     (todomvc.nix.myHaskellPackages.ghcWithPackages (p: with p; [zlib]))
     todomvc.nix.myHaskellPackages.cabal-install
     todomvc.nix.myHaskellPackages.stack
+    todomvc.nix.myHaskellPackages.haskell-language-server
+    todomvc.nix.myHaskellPackages.hlint
+    todomvc.nix.myHaskellPackages.ormolu
 
     ### haskell-nix
     # todomvc.nix.pkgs.myHaskellNixPackages.ghc

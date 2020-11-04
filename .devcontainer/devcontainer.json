@@ -35,6 +35,7 @@
         "ms-vscode.go",
         "matklad.rust-analyzer",
         "rust-lang.rust",
+        "haskell.haskell",
         "bbenoist.nix",
         "rubymaniac.vscode-direnv"
     ],
