@@ -9,27 +9,27 @@ mkDevShell {
     {
       name = "pginit";
       help = "init psql service";
-      command = "${todomvc.nix.pkgs.database.pgutil.init_pg} || echo '''PG init failed''' ";
+      command = "${todomvc.nix.database.pgutil.init_pg} || echo '''PG init failed''' ";
     }
     {
       name = "pgstart";
       help = "start psql service";
-      command = "${todomvc.nix.pkgs.database.pgutil.start_pg} || echo '''PG start failed''' ";
+      command = "${todomvc.nix.database.pgutil.start_pg} || echo '''PG start failed''' ";
     }
     {
       name = "pgstop";
       help = "stop psql service";
-      command = "${todomvc.nix.pkgs.database.pgutil.stop_pg} || echo '''PG stop failed''' ";
+      command = "${todomvc.nix.database.pgutil.stop_pg} || echo '''PG stop failed''' ";
     }
     {
       name = "migrate";
       help = "migrate database using sqitch";
-      command = "${todomvc.nix.pkgs.database.migrate}/bin/sqitch deploy || echo '''Migrate database failed''' ";
+      command = "${todomvc.nix.database.migrate}/bin/sqitch deploy || echo '''Migrate database failed''' ";
     }
     {
       name = "deletedb";
       help = "delete database using sqitch";
-      command = "${todomvc.nix.pkgs.database.migrate}/bin/sqitch revert || echo '''Migrate database failed''' ";
+      command = "${todomvc.nix.database.migrate}/bin/sqitch revert || echo '''Migrate database failed''' ";
     }
     # {
     #   name = "todo-hs-backend";
@@ -65,12 +65,12 @@ mkDevShell {
 
     # build tools
     ### Rust
-	todomvc.nix.pkgs.rust
+	todomvc.nix.rust
 
     ### haskell tools
-    (todomvc.nix.pkgs.myHaskellPackages.ghcWithPackages (p: with p; [zlib]))
-    todomvc.nix.pkgs.myHaskellPackages.cabal-install
-    todomvc.nix.pkgs.myHaskellPackages.stack
+    (todomvc.nix.myHaskellPackages.ghcWithPackages (p: with p; [zlib]))
+    todomvc.nix.myHaskellPackages.cabal-install
+    todomvc.nix.myHaskellPackages.stack
 
     ### haskell-nix
     # todomvc.nix.pkgs.myHaskellNixPackages.ghc

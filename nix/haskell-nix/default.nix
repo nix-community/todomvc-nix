@@ -4,7 +4,7 @@ haskell-nix.project {
   projectFileName = "cabal.project";
   src = haskell-nix.haskellLib.cleanGit {
     name = "todomvc-haskellNix";
-    src  = ../../../backend/haskell;
+    src  = ../../backend/haskell;
   };
   compiler-nix-name = "ghc884";
 }
