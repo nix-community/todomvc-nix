@@ -31,11 +31,6 @@ mkDevShell {
       help = "delete database using sqitch";
       command = "${todomvc.nix.database.migrate}/bin/sqitch revert || echo '''Migrate database failed''' ";
     }
-    # {
-    #   name = "todo-hs-backend";
-    #   help = "run todomvc from haskellPackages";
-    #   command = "${todomvc.nix.pkgs.myHaskellPackages.todomvc-haskell}/bin/todomvc-haskell";
-    # }
   ];
 
   bash = {
@@ -62,18 +57,21 @@ mkDevShell {
     # project executable
     # Haskell
     ## haskellPackages
+    todomvc.nix.myHaskellPackages.todomvc-haskell
+
     ## haskell-nix
-    # todomvc.nix.pkgs.myHaskellNixPackages.components.exes.todomvc-haskellNix
+    #todomvc.nix.myHaskellNixPackages.hsPkgs
 
     # build tools
     ### Rust
 	todomvc.nix.rust
 
     ### haskell tools
-    (todomvc.nix.myHaskellPackages.ghcWithPackages(p: with p; [ zlib ]))
+    todomvc.nix.myHaskellPackages.ghc#WithPackages(p: with p; [ zlib ]))
     todomvc.nix.myHaskellPackages.cabal-install
     todomvc.nix.myHaskellPackages.stack
     todomvc.nix.myHaskellPackages.haskell-language-server
+    todomvc.nix.myHaskellPackages.ghcid
     todomvc.nix.myHaskellPackages.hlint
     todomvc.nix.myHaskellPackages.ormolu
 
@@ -96,7 +94,6 @@ mkDevShell {
     pkgconfig
     openssl
     gcc
-    zlib.dev
     glibc
 
     # backend

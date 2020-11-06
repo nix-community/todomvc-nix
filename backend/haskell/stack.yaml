@@ -1,4 +1,0 @@
-flags: {}
-packages: ./.
-resolver: lts-16.20
-system-ghc: true

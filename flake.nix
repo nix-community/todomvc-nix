@@ -1,7 +1,7 @@
 {
   description = "todomvc-nix";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.devshell.url = "github:numtide/devshell";
+  inputs.devshell.url = "github:numtide/devshell/packages-from";
   inputs.mozilla-overlay = {
     type = "github";
     owner = "mozilla";

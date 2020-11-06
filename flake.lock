@@ -2,15 +2,16 @@
   "nodes": {
     "devshell": {
       "locked": {
-        "lastModified": 1602575409,
-        "narHash": "sha256-8odo24pcxTxZkbXeaL2Dpwx3zIZ1zqThZ9PetlGqyyw=",
+        "lastModified": 1604560786,
+        "narHash": "sha256-4rsc0Tio5a7ErVWI75Win/Y3IDn17V1MK28LusERBs8=",
         "owner": "numtide",
         "repo": "devshell",
-        "rev": "658a8216fa545b829a41570ec866a7dd0e35f050",
+        "rev": "69b1e40283ac262b557b596a8211c0c05040c9ef",
         "type": "github"
       },
       "original": {
         "owner": "numtide",
+        "ref": "packages-from",
         "repo": "devshell",
         "type": "github"
       }
