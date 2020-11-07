@@ -4,12 +4,23 @@ module Db where
 import Data.Maybe
 
 import Database.PostgreSQL.Simple
+import Database.PostgreSQL.Simple.FromRow
 import Database.PostgreSQL.Simple.SqlQQ
 
 import Model
 import Polysemy
 import           Polysemy.Fail
 import           Polysemy.Reader
+
+data Todo = Todo
+  { tId :: Maybe Int
+  , tTitle :: Maybe String
+  , tCompleted :: Maybe Bool
+  , tOrder :: Maybe Int
+  } deriving (Show, Eq, Read)
+
+instance FromRow Todo where
+    fromRow = Todo <$> field <*> field <*> field <*> field
 
 -- TODO: should look into this https://funprog.srid.ca/polysemy/interpreter-for-action-that-adds-on-the-effect-stack.html#212801533
 data DbCrud m a where

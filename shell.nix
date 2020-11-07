@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs }:
 
 with pkgs;
 
@@ -52,12 +52,14 @@ mkDevShell {
     PGPASSWORD="todomvc_dbpass";
     GO111MODULE="on";
   };
-
+  packagesFrom = [
+    todomvc.nix.todoHaskell
+  ];
   packages = [
     # project executable
     # Haskell
     ## haskellPackages
-    todomvc.nix.myHaskellPackages.todomvc-haskell
+    todomvc.todoHaskellPackages.todo-haskell
 
     ## haskell-nix
     #todomvc.nix.myHaskellNixPackages.hsPkgs
@@ -67,14 +69,6 @@ mkDevShell {
 	todomvc.nix.rust
 
     ### haskell tools
-    todomvc.nix.myHaskellPackages.ghc#WithPackages(p: with p; [ zlib ]))
-    todomvc.nix.myHaskellPackages.cabal-install
-    todomvc.nix.myHaskellPackages.stack
-    todomvc.nix.myHaskellPackages.haskell-language-server
-    todomvc.nix.myHaskellPackages.ghcid
-    todomvc.nix.myHaskellPackages.hlint
-    todomvc.nix.myHaskellPackages.ormolu
-
     ### haskell-nix
     # todomvc.nix.pkgs.myHaskellNixPackages.ghc
     # todomvc.nix.pkgs.myHaskellNixPackages.cabal-install
@@ -95,6 +89,7 @@ mkDevShell {
     openssl
     gcc
     glibc
+    zlib.dev
 
     # backend
     # todomvc.nix.backend
@@ -109,5 +104,4 @@ mkDevShell {
     postgresql
     moreutils
   ];
-
 }

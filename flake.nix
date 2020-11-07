@@ -8,12 +8,18 @@
     repo = "nixpkgs-mozilla";
     flake = false;
   };
+
+  # Haskell dependencies
   inputs.haskellNix.url = "github:input-output-hk/haskell.nix/master";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
+  inputs.polysemy = { url = "github:polysemy-research/polysemy"; flake = false; };
+  inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
+  inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };
+  inputs.stack = { url = "github:commercialhaskell/stack"; flake = false; };
 
-  outputs = { self, nixpkgs,  mozilla-overlay, haskellNix, flake-utils, devshell }:
+  outputs = { self, nixpkgs,  mozilla-overlay, haskellNix, flake-utils, devshell, polysemy, http-media, servant, stack }:
     {
-      overlay = import ./overlay.nix;
+      overlay = import ./overlay.nix { inherit polysemy http-media servant stack; };
     }
     //
     (
@@ -45,7 +51,6 @@
           packages = flake-utils.lib.flattenTree pkgs.todomvc.nix;
 
           devShell = import ./shell.nix { inherit pkgs; };
-          # pkgs.mkDevShell.fromTOML ./devshell.toml;
 
           checks = { };
         }

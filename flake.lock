@@ -47,6 +47,23 @@
         "type": "github"
       }
     },
+    "http-media": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1586581061,
+        "narHash": "sha256-JKc+BpURS3iVAtcVjPHWVizDT1Yf9cnhkV+bAFHnOEk=",
+        "owner": "zmthy",
+        "repo": "http-media",
+        "rev": "917b58ff5f69f1dc7791c59f6530767d099680bf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zmthy",
+        "ref": "develop",
+        "repo": "http-media",
+        "type": "github"
+      }
+    },
     "mozilla-overlay": {
       "flake": false,
       "locked": {
@@ -79,13 +96,65 @@
         "type": "github"
       }
     },
+    "polysemy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1604247340,
+        "narHash": "sha256-cDzUETOR5mj0D6tl5bEADGJsOnMVVDyI5J4EfDbnBQM=",
+        "owner": "polysemy-research",
+        "repo": "polysemy",
+        "rev": "ade8826e1cb93f8ae17bcc877aab8c3f8540b756",
+        "type": "github"
+      },
+      "original": {
+        "owner": "polysemy-research",
+        "repo": "polysemy",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "devshell": "devshell",
         "flake-utils": "flake-utils",
         "haskellNix": "haskellNix",
+        "http-media": "http-media",
         "mozilla-overlay": "mozilla-overlay",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "polysemy": "polysemy",
+        "servant": "servant",
+        "stack": "stack"
+      }
+    },
+    "servant": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1604564174,
+        "narHash": "sha256-bxT9rSfQ8QCmKkhIUBBySW5TZW3qWhG5++wIXiAVwlI=",
+        "owner": "haskell-servant",
+        "repo": "servant",
+        "rev": "8e2a654e0ee79868d6f6f8d0fc45ddc143668a5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "haskell-servant",
+        "repo": "servant",
+        "type": "github"
+      }
+    },
+    "stack": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1602779249,
+        "narHash": "sha256-sVi47XcxTPNZIL9OvK6NC1msOlzx+TpgDA1awJdFjRA=",
+        "owner": "commercialhaskell",
+        "repo": "stack",
+        "rev": "9621945bf7fe6d0a526ee6b6f183d3c821143979",
+        "type": "github"
+      },
+      "original": {
+        "owner": "commercialhaskell",
+        "repo": "stack",
+        "type": "github"
       }
     }
   },

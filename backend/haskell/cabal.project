@@ -1,4 +1,6 @@
-with-compiler: ghc-8.8.4
-packages: ./
+with-compiler: ghc-8.10.2
+packages:
+  ./.
+  ./../../common/haskell/todo-common.cabal
 tests: false
 benchmarks: false

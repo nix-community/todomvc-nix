@@ -6,5 +6,5 @@ haskell-nix.cabalProject {
     name = "todo-haskell";
     src  = ../../backend/haskell;
   };
-  compiler-nix-name = "ghc884";
+  compiler-nix-name = "ghc8102";
 }
