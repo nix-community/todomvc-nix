@@ -2,6 +2,7 @@
   description = "todomvc-nix";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.devshell.url = "github:numtide/devshell/packages-from";
+  inputs.naersk.url = "github:nmattia/naersk";
   inputs.mozilla-overlay = {
     type = "github";
     owner = "mozilla";
@@ -16,16 +17,18 @@
   inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
   inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };
   inputs.stack = { url = "github:commercialhaskell/stack"; flake = false; };
+  inputs.rhyolite-obelisk = { url = "github:obsidiansystems/rhyolite/develop"; flake = false; };
+  inputs.beam = { url = "github:haskell-beam/beam/master"; flake = false; };
 
-  outputs = { self, nixpkgs,  mozilla-overlay, haskellNix, flake-utils, devshell, polysemy, http-media, servant, stack }:
+  outputs = { self, nixpkgs, naersk, mozilla-overlay, haskellNix, flake-utils, devshell, beam, polysemy, http-media, servant, stack, rhyolite-obelisk }:
     {
-      overlay = import ./overlay.nix { inherit polysemy http-media servant stack; };
+      overlay = import ./overlay.nix { inherit beam polysemy http-media servant stack rhyolite-obelisk; };
     }
     //
     (
       flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
         let
-          haskellNixPkgs = haskellNix.legacyPackages;
+        #   haskellNixPkgs = haskellNix.legacyPackages;
           pkgs = import nixpkgs {
             inherit system;
             # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
@@ -39,16 +42,15 @@
                 (import mozilla-overlay)
                 haskellNix.overlay
                 devshell.overlay
+                naersk.overlay
                 self.overlay
             ];
           };
         in
         {
-          legacyPackages = pkgs.todomvc.nix;
+          legacyPackages = pkgs.todomvc;
 
-          defaultPackage = pkgs.todomvc.nix.backend;
-
-          packages = flake-utils.lib.flattenTree pkgs.todomvc.nix;
+          packages = flake-utils.lib.flattenTree pkgs.todomvc;
 
           devShell = import ./shell.nix { inherit pkgs; };
 

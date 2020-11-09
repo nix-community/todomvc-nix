@@ -1,12 +1,36 @@
-{ polysemy, http-media, servant, stack }:
+{ beam, polysemy, http-media, servant, stack, rhyolite-obelisk }:
 final: prev:
 let
   noCheck = p: final.haskell.lib.dontCheck p;
   noHaddock = p: final.haskell.lib.dontHaddock p;
   fast = p: noHaddock (noCheck p);
+  obelisk = import rhyolite-obelisk { system = final.system; profiling = true; };
 in
-rec {
-  todomvc = {
+{
+  todomvc = rec {
+    todoHaskellObelisk =
+      let
+        inherit (prev) lib;
+        hsLib = prev.haskell.lib;
+        composeExtensions = prev.lib.composeExtensions;
+        haskellOverrides =  lib.foldr composeExtensions obelisk.haskellOverrides [
+          (self: super: with hsLib; {
+            beam-core = self.callCabal2nix "beam-core" (beam + "/beam-core") {};
+            beam-postgres = noCheck (self.callCabal2nix (beam + "/beam-postgres") {});
+            beam-migrate = self.callCabal2nix (beam + "/beam-migrate") {};
+          })
+        ];
+      in obelisk // {
+        inherit haskellOverrides;
+        project = base: projectDefinition:
+          obelisk.project base ({...}@args:
+            let def = projectDefinition args;
+            in def // {
+              overrides = composeExtensions haskellOverrides (def.overrides or (_: _: {}));
+            });
+      };
+    # this `todoObelisk` is not needed once `todoHaskellObelisk` in ./nix/haskell-obelisk works.
+    # todoObelisk = prev.callPackage ./frontend/haskell/reflex-dom { };
     # inherit polysemy http-media servant stack;
     todoHaskellPackages = prev.haskell.packages.ghc8102.extend (self: super: {
       http-media = self.callCabal2nix "http-media" http-media {};

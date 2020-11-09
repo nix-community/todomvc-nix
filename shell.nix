@@ -31,6 +31,11 @@ mkDevShell {
       help = "delete database using sqitch";
       command = "${todomvc.nix.database.migrate}/bin/sqitch revert || echo '''Migrate database failed''' ";
     }
+    {
+      name = "ls-reflex";
+      help = "ls-reflex folder";
+      command = "ls ${todomvc.nix.haskellObelisk.ghcjs.frontend} || echo '''ls failed''' ";
+    }
   ];
 
   bash = {
@@ -54,13 +59,17 @@ mkDevShell {
   };
   packagesFrom = [
     todomvc.nix.todoHaskell
+
+    # todomvc.nix.haskellObelisk.shells.ghcjs
   ];
   packages = [
     # project executable
     # Haskell
-    ## haskellPackages
-    todomvc.todoHaskellPackages.todo-haskell
+    todomvc.todoHaskellObelisk.command
+    # todomvc.nix.haskellObelisk.ghcjs.frontend
 
+    ## haskellPackages
+    haskell.packages.ghcjs
     ## haskell-nix
     #todomvc.nix.myHaskellNixPackages.hsPkgs
 
@@ -73,7 +82,6 @@ mkDevShell {
     # todomvc.nix.pkgs.myHaskellNixPackages.ghc
     # todomvc.nix.pkgs.myHaskellNixPackages.cabal-install
     # todomvc.nix.pkgs.myHaskellNixPackages.stack
-
     ### Go
     go
     gopls

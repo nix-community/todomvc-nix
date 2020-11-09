@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "beam": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1603285412,
+        "narHash": "sha256-XtpnNrQnDAo2O/f044AV3pCAUpOZNjxfz6/N2bn3w9I=",
+        "owner": "haskell-beam",
+        "repo": "beam",
+        "rev": "d5927fe7da0c8c4bf5bbf37c84f2dfe9869d7658",
+        "type": "github"
+      },
+      "original": {
+        "owner": "haskell-beam",
+        "ref": "master",
+        "repo": "beam",
+        "type": "github"
+      }
+    },
     "devshell": {
       "locked": {
         "lastModified": 1604560786,
@@ -80,7 +97,39 @@
         "type": "github"
       }
     },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1603963015,
+        "narHash": "sha256-PcHlJHKu9Hj7tquEwh0vNdL2RoU4ocRtWZDvaYPzEpo=",
+        "owner": "nmattia",
+        "repo": "naersk",
+        "rev": "d645515b7159c75087b3d51f23a68047c2c09699",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nmattia",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1604846542,
+        "narHash": "sha256-jIejUzJw3aFhOaXw4frvl270q+5YpjmGdZnAaCOQV54=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "884d7ac411116de09d0e622ad851880915a2654a",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1602747252,
         "narHash": "sha256-9fFjYZ1HTkwobnu5S8s3xNQ5QzF0GNnheB4qGN4NJps=",
@@ -112,15 +161,35 @@
         "type": "github"
       }
     },
+    "rhyolite-obelisk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1596060010,
+        "narHash": "sha256-2Z4X5owORLSVXU6SP7ekiSTNh9AzyzaMuzKB2eriVnU=",
+        "owner": "obsidiansystems",
+        "repo": "rhyolite",
+        "rev": "900cc4c432c3fbe27b876faad9020f9f1f33cf75",
+        "type": "github"
+      },
+      "original": {
+        "owner": "obsidiansystems",
+        "ref": "develop",
+        "repo": "rhyolite",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "beam": "beam",
         "devshell": "devshell",
         "flake-utils": "flake-utils",
         "haskellNix": "haskellNix",
         "http-media": "http-media",
         "mozilla-overlay": "mozilla-overlay",
-        "nixpkgs": "nixpkgs",
+        "naersk": "naersk",
+        "nixpkgs": "nixpkgs_2",
         "polysemy": "polysemy",
+        "rhyolite-obelisk": "rhyolite-obelisk",
         "servant": "servant",
         "stack": "stack"
       }
