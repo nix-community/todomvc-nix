@@ -18,9 +18,7 @@ with todomvc;
 
 # This should be working fine.
 todoHaskellObelisk.project ./. ({ ... }: {
-  packages = {
-    frontend = ../../frontend/haskell/reflex-dom/frontend;
-    common = ../../common/haskell;
-  };
-  staticFiles = ../../frontend/haskell/reflex-dom/static;
+    packages = {
+      todo-reflex = ./.;
+    };
 })

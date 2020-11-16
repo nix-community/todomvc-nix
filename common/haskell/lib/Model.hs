@@ -19,12 +19,20 @@ instance ToJSON TodoResponse where
       [ "id"        .= trid
       , "title"     .= trtitle
       , "completed" .= trcompleted
-      , "orderx"     .= trorder
+      , "orderx"    .= trorder
       ]
     where
       noNullsObject = object . filter notNull
       notNull (_, Null) = False
       notNull _         = True
+
+instance FromJSON TodoResponse where
+  parseJSON (Object o) = TodoResponse
+    <$> o .: "id"
+    <*> o .: "title"
+    <*> o .: "completed"
+    <*> o .: "orderx"
+  parseJSON _ = mzero
 
 data TodoAction = TodoAction
   { actTitle :: Maybe String

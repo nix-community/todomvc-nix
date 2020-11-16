@@ -15,4 +15,5 @@
     "go.toolsEnvVars": {
         "GO111MODULE": "on"
     },
+    "haskell.logFile": "/home/rizary/hls.log",
 }

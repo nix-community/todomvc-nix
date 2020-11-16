@@ -19,8 +19,6 @@ todoHaskellObelisk.project ./. ({ ... }: {
   packages = {
     ios.bundleIdentifier = null;
     ios.bundleName = null;
-    frontend = ../../frontend/haskell/reflex-dom/frontend;
-    common = ../../common/haskell;
+    todo-reflex = ./.;
   };
-  staticFiles = ../../frontend/haskell/reflex-dom/static;
 })

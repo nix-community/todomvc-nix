@@ -1,0 +1,3 @@
+with-compiler: ghc
+compiler: ghc
+packages: ./.

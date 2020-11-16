@@ -6,3 +6,5 @@ node_modules/
 frontend/rust/devhtml/js/
 .direnv/
 dist-newstyle/
+.ghc.*
+*/.ghc.*
