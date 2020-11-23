@@ -14,55 +14,21 @@
   };
 
   # Haskell dependencies
-  inputs.haskellNix.url = "github:input-output-hk/haskell.nix/master";
-  inputs.haskellHackageNix = { url = "github:input-output-hk/hackage.nix/master"; flake = false; };
-  inputs.haskellStackageNix = { url = "github:input-output-hk/stackage.nix/master"; flake = false; };
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
   inputs.polysemy = { url = "github:polysemy-research/polysemy"; flake = false; };
   inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
   inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };
-  inputs.stack = { url = "github:commercialhaskell/stack"; flake = false; };
-  inputs.rhyolite-obelisk = { url = "github:obsidiansystems/rhyolite/develop"; flake = false; };
   inputs.miso = { url = "github:dmjio/miso/master"; flake = false; };
   inputs.servant-jsaddle = { url = "github:haskell-servant/servant-jsaddle/master"; flake = false; };
-  inputs.beam = { url = "github:haskell-beam/beam/master"; flake = false; };
 
-  outputs = { self, nixpkgs, naersk, mozilla-overlay, haskellNix, haskellHackageNix, haskellStackageNix, flake-utils, devshell, beam, polysemy, http-media, servant, stack, rhyolite-obelisk, miso, servant-jsaddle }:
+  outputs = { self, nixpkgs, naersk, mozilla-overlay, flake-utils, devshell, polysemy, http-media, servant, miso, servant-jsaddle }:
     {
-      overlay = import ./overlay.nix { inherit haskellNix haskellHackageNix haskellStackageNix beam polysemy http-media servant stack rhyolite-obelisk miso servant-jsaddle; };
+      overlay = import ./overlay.nix { inherit  polysemy http-media servant miso servant-jsaddle; };
     }
     //
     (
       flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
         let
-
-            # let
-            #     hnixoverlay = (haskellNix.overlays {
-            #       sourcesOverride = {
-            #         hackage = haskellHackageNix;
-            #         stackage = haskellStackageNix;
-            #       };
-            #     }).combined-eval-on-build;
-            #     nixpkgsSrc = haskellNix.sources.nixpkgs-2009;
-            #     nixpkgsArgs = {
-            #       config = haskellNix.config;
-            #       overlays = [ hnixoverlay ];
-            #     };
-                # legacyPackages =
-                # let
-                #   genAttrs = lst: f:
-                #     builtins.listToAttrs (map (name: {
-                #       inherit name;
-                #       value = f name;
-                #     }) lst);
-                # in
-                # genAttrs [ "x86_64-linux" "x86_64-darwin" ] (system:
-                #   import self.sources.nixpkgs
-                #   (self.nixpkgsArgs // { localSystem = { inherit system; }; })
-                # );
-            #     hnixpkgs = import nixpkgsSrc (nixpkgsArgs // { localSystem = { inherit system; }; });
-            # in hnixpkgs;
-
           pkgs = import nixpkgs {
             inherit system;
             # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:

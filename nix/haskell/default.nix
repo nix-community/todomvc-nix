@@ -6,19 +6,6 @@ let
 in
 #Build a new overlay with our own packages
 with todomvc;
-# todoHaskellPackages.shellFor {
-#   packages = p: [ p.todo-common p.todo-haskell p.aeson ];
-#   withHoogle = true;
-#   buildInputs = with pkgs; [
-#     todoHaskellPackages.cabal-install
-#     todoHaskellPackages.ghcid
-#     todoHaskellPackages.haskell-language-server
-#     todoHaskellPackages.hlint
-#     todoHaskellPackages.stack
-#     todoHaskellPackages.ormolu
-#     zlib.dev
-#   ];
-# }
 
 todoHaskellPackages.developPackage {
     root = ../../backend/haskell;

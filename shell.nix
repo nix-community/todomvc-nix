@@ -31,15 +31,6 @@ mkDevShell {
       help = "delete database using sqitch";
       command = "${todomvc.nix.database.migrate}/bin/sqitch revert || echo '''Migrate database failed''' ";
     }
-    {
-      name = "develop-miso";
-      help = "develop miso app";
-      command = ''
-        ${todomvc.todoHaskellMisoDev.haskell.packages.ghc865.ghcid}/bin/ghcid -c \
-          '${todomvc.todoHaskellMisoDev.haskell.packages.ghc865.cabal-install}/bin/cabal new-repl todo-miso --write-ghc-environment-files never' \
-          -W -s ':load Main' -T ':main'
-      '';
-    }
   ];
 
   bash = {
@@ -65,45 +56,20 @@ mkDevShell {
   packages = [
     # project executable
     # Haskell
-    # TODO: Make reflex/refex-dom project works
-    # todomvc.todoHaskellObelisk.command
-
-    # todomvc.nix.haskellMiso.dev.todo-miso
-    todomvc.reflexDev.ghc.todo-haskell
-    todomvc.reflexDev.ghc.todo-common
 
     # todomvc.reflexDev.ghc.frontend
     todomvc.todoHaskellMisoDev.haskell.packages.ghc865.cabal-install
     (todomvc.todoHaskellMisoDev.haskell.packages.ghc865.ghcWithPackages (p: with p; [
-        jsaddle jsaddle-warp transformers warp websockets todo-common servant-jsaddle miso-jsaddle
+        jsaddle jsaddle-warp transformers warp websockets todo-common servant-jsaddle miso-jsaddle lens text http-proxy http-client mtl
       ])
     )
-    # (todomvc.misoDev.ghcWithPackages (p: with p; [
-    #     jsaddle jsaddle-warp transformers warp websockets todo-common
-    #   ])
-    # )
-    # todomvc.todoHaskellMisoDev.ghcid
-    # todomvc.nix.haskellMiso.prod.todo-miso-js
-
-    ## haskell-nix
-    # TODO: Make haskell.nix works in this project.
-    # todomvc.nix.haskellNixBackend.todo-haskell.components.exes.todo-haskell
-
-    ## haskellPackages
-    ## haskell-nix
-    # TODO: Make haskell.nix works in this project.
-    #todomvc.nix.myHaskellNixPackages.hsPkgs
-
     # build tools
     ### Rust
 	todomvc.nix.rust
 
     ### haskell tools
-    ### haskell-nix
-    # todomvc.nix.pkgs.myHaskellNixPackages.ghc
-    # todomvc.nix.pkgs.myHaskellNixPackages.cabal-install
-    # todomvc.nix.pkgs.myHaskellNixPackages.stack
     ### haskellPackages
+    todomvc.nix.haskellBackend
     # (todomvc.todoHaskellPackages.ghcWithPackages
     #   (p: with p; [
     #     aeson aeson-pretty http-types todo-common warp zlib lens polysemy text
@@ -111,11 +77,6 @@ mkDevShell {
     #   ])
     # )
     # todomvc.todoHaskellPackages.cabal-install
-    # todomvc.todoHaskellPackages.stack
-    # todomvc.todoHaskellPackages.haskell-language-server
-    # todomvc.todoHaskellPackages.ghcid
-    # todomvc.todoHaskellPackages.hlint
-    # todomvc.todoHaskellPackages.ormolu
     ### Go
     go
     gopls
@@ -136,14 +97,9 @@ mkDevShell {
     icu.dev
     gmp.dev
 
-    # backend
-    # todomvc.nix.backend
-
     # frontend
     nodejs-12_x
     yarn
-    # yarn2nix
-    # wasm-pack
 
     # database
     postgresql

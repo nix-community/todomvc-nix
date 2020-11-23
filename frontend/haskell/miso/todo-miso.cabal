@@ -10,7 +10,7 @@ executable todo-miso
     Main.hs
   hs-source-dirs: src-bin
   build-depends:
-    base, miso, todo-common, servant, containers, lens, text
+    base, miso, todo-common, servant, containers, lens, text, mtl
   if !impl(ghcjs)
     build-depends:
        jsaddle, jsaddle-warp, transformers, warp, websockets, servant-jsaddle,

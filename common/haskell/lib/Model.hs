@@ -12,7 +12,7 @@ data TodoResponse = TodoResponse
   , trtitle     :: String
   , trcompleted :: Bool
   , trorder     :: Int
-  } deriving (Show)
+  } deriving (Show, Eq)
 
 instance ToJSON TodoResponse where
   toJSON (TodoResponse trid trtitle trcompleted trorder) = noNullsObject
@@ -38,7 +38,7 @@ data TodoAction = TodoAction
   { actTitle :: Maybe String
   , actCompleted :: Maybe Bool
   , actOrder :: Maybe Int
-  } deriving (Show)
+  } deriving (Show, Eq)
 
 instance FromJSON TodoAction where
   parseJSON (Object o) = TodoAction
@@ -47,3 +47,13 @@ instance FromJSON TodoAction where
     <*> o .:? "orderx"
   parseJSON _ = mzero
 
+instance ToJSON TodoAction where
+  toJSON (TodoAction actTitle actCompleted actOrder) = noNullsObject
+      [ "title"     .= actTitle
+      , "completed" .= actCompleted
+      , "orderx"    .= actOrder
+      ]
+    where
+      noNullsObject = object . filter notNull
+      notNull (_, Null) = False
+      notNull _         = True
