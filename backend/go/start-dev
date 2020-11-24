@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Run this script to start the developer loop
-set -euo pipefail
-
-cd "$(dirname "$0")"
-
-# On each file change, kill, rebuild and restart the server
-reflex -r '\.go$' -s -- sh -c 'go build -o todomvc-go && exec ./todomvc-go'
