@@ -15,8 +15,8 @@ in
             servant-server = fast (prev.callHackage "servant-server" "0.16" { });
             servant-lucid = prev.callHackage "servant-lucid" "0.9" { };
             servant = fast (prev.callHackage "servant" "0.16" { });
-            todo-common = prev.callCabal2nix "todo-common" ./../../common/haskell { };
-            todo-miso = prev.callCabal2nix "todo-miso" ./../../frontend/haskell/miso { miso = miso-jsaddle; };
+            todo-common = prev.callCabal2nix "todo-common" ./../../haskell/common { };
+            todo-miso = prev.callCabal2nix "todo-miso" ./../../haskell/frontend { miso = miso-jsaddle; };
             miso = miso-jsaddle;
         };
     };
@@ -36,8 +36,8 @@ in
             http-types = noCheck prev.http-types;
             servant = noCheck prev.servant;
             servant-jsaddle = prev.callCabal2nix "servant-jsaddle" todomvc.servant-jsaddle { };
-            todo-common = prev.callCabal2nix "todo-common" ./../../common/haskell { };
-            todo-miso = prev.callCabal2nix "todo-miso" ./../../frontend/haskell/miso { };
+            todo-common = prev.callCabal2nix "todo-common" ./../../haskell/common { };
+            todo-miso = prev.callCabal2nix "todo-miso" ./../../haskell/frontend { };
         };
     };
 }

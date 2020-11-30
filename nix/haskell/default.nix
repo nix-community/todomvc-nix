@@ -8,14 +8,14 @@ in
 with todomvc;
 
 todoHaskellPackages.developPackage {
-    root = ../../backend/haskell;
+    root = ../../haskell/backend;
     name = "todo-haskell";
     source-overrides = {
         polysemy = todomvc.polysemy;
         http-media = todomvc.http-media;
         servant = todomvc.servant + "/servant";
         servant-server = todomvc.servant + "/servant-server";
-        todo-common = ../../common/haskell;
+        todo-common = ../../haskell/common;
     };
     overrides = self: super: {
         time-compat = fast super.time-compat;

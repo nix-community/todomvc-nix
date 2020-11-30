@@ -6,7 +6,7 @@ let
   fast = p: noHaddock (noCheck p);
   misoPkgs = import miso { system = final.system; allowBroken = true; };
 
-in rec
+in
 {
   todomvc = rec {
     inherit polysemy http-media servant servant-jsaddle misoPkgs;
@@ -26,8 +26,8 @@ in rec
         servant-lucid = self.callHackage "servant-lucid" "0.9" {};
         servant-jsaddle = noCheck (self.callCabal2nix "servant-jsaddle" servant-jsaddle {});
         jsaddle-warp = fast super.jsaddle-warp;
-        todo-common = self.callCabal2nix "todo-common" ./common/haskell { };
-        todo-miso = self.callCabal2nix "todo-miso" ./../../frontend/haskell/miso { miso = misoPkgs.miso-jsaddle; };
+        todo-common = self.callCabal2nix "todo-common" ./haskell/common { };
+        todo-miso = self.callCabal2nix "todo-miso" ./haskell/frontend { miso = misoPkgs.miso-jsaddle; };
       }
     );
     todoHaskellMisoDev = misoPkgs.pkgs // {
@@ -45,13 +45,15 @@ in rec
       servant = self.callCabal2nix "servant" (servant + "/servant") {};
       servant-server = self.callCabal2nix "servant-server" (servant + "/servant-server") {};
       time-compat = fast super.time-compat;
-      todo-common = self.callCabal2nix "todo-common" ./common/haskell {};
-      todo-haskell = self.callCabal2nix "todo-haskell" ./backend/haskell {};
+      todo-common = self.callCabal2nix "todo-common" ./haskell/common {};
+      todo-haskell = self.callCabal2nix "todo-haskell" ./haskell/backend {};
     });
     nix = prev.callPackage ./nix { };
     backend-rust = prev.naersk.buildPackage {
-      src = final.builtins.filterSource (path: type: type != "directory" || final.builtins.baseNameOf path != "target") ./backend/rust;
+      src = prev.builtins.filterSource (path: type: type != "directory" || prev.builtins.baseNameOf path != "target") ./rust/backend;
       remapPathPrefix = true;
+      rustc = nix.rust;
+      cargo = nix.rust;
     };
 
   };

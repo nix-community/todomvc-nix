@@ -19,4 +19,4 @@ $ cargo run
 
 To develop frontend in Rust, only `yarn` or `npm` is needed to compile Rust into WebAssembly.
 
-Please refer to [package.json](../frontend/rust/package.json) for further reference. In short, `rollupjs` is used to compile/package rust to wasm.
+Please refer to [package.json](../rust/frontend/package.json) for further reference. In short, `rollupjs` is used to compile/package rust to wasm.
