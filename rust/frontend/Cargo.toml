@@ -11,7 +11,7 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-common = { path = "../../common/rust/" }
+common = { path = "../common/" }
 console_error_panic_hook = { version = "0.1.5", optional = true }
 cfg-if = "1.0"
 js-sys = "0.3.45"

@@ -49,12 +49,32 @@ in
       todo-haskell = self.callCabal2nix "todo-haskell" ./haskell/backend {};
     });
     nix = prev.callPackage ./nix { };
-    backend-rust = prev.naersk.buildPackage {
-      src = prev.builtins.filterSource (path: type: type != "directory" || prev.builtins.baseNameOf path != "target") ./rust/backend;
+    rust-backend = prev.naersk.buildPackage {
+      src = ./rust/backend;
       remapPathPrefix = true;
       rustc = nix.rust;
       cargo = nix.rust;
     };
+    # (prev.makeRustPlatform { cargo = nix.rust; rustc = nix.rust; }).buildRustPackage {
+    #   pname = "rust-backend";
+    #   version = "0.1.0";
+    #   src = ./rust/backend;
+    #   cargoSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    # #   vendorSha256 = "0lviz7l5zbghyfkp0lvlv8ykpak5hhkfal8d7xwvpsm8q3sghc8a";
+    #   target="x86_64-unknown-linux-musl";
+    #   RUSTC_BOOTSTRAP=1;
+    #   # Needed to get openssl-sys to use pkgconfig.
+    #   OPENSSL_NO_VENDOR = 1;
+    #   doCheck = false;
+
+    #   nativeBuildInputs = [
+    #     prev.pkgconfig
+    #     prev.glibc
+    #   ];
+    #   buildInputs = [
+    #     prev.openssl.dev
+    #   ];
+    # };
 
   };
 
