@@ -50,11 +50,11 @@
         {
           legacyPackages = pkgs.todomvc;
 
-          defaultPackage = pkgs.todomvc.nix.haskellMiso.dev.todo-miso;
+          defaultPackage = pkgs.todomvc.nix.haskellBackend;
 
           packages = flake-utils.lib.flattenTree pkgs.todomvc;
 
-          devShell = import ./shell.nix { inherit pkgs; };
+          devShell = import ./devshell.nix { inherit pkgs; };
 
           checks = { };
         }
