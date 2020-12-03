@@ -2,9 +2,25 @@
   description = "todomvc-nix";
   # To update all inputs:
   # $ nix flake update --recreate-lock-file
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.devshell.url = "github:numtide/devshell/master";
-  inputs.naersk.url = "github:nmattia/naersk";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
+  inputs.flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+  };
+  inputs.devshell = {
+      url = "github:numtide/devshell/master";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+  };
+  inputs.naersk = {
+      url = "github:nmattia/naersk";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+  };
   # Only for example, use the .url for simplicity
   inputs.mozilla-overlay = {
     type = "github";
@@ -14,7 +30,6 @@
   };
 
   # Haskell dependencies
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
   inputs.polysemy = { url = "github:polysemy-research/polysemy"; flake = false; };
   inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
   inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };

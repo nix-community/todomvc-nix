@@ -49,7 +49,22 @@ Make sure that you have the following package installed in your machine:
 ### Setup
 [[Back to the Table of Contents] ↑](#structure)
 
-To use this repo, please enable `flakes` feature using the following method:
+#### Non-nix-flake user
+
+This repository can be used using plain `nix-build` or `nix-shell`. This is possible with the help of `flake-compat` as mentioned in [default.nix](./default.nix). To build the package, just run:
+
+```
+$ nix-build -A defaultNix
+```
+
+and to enter into Nix shell, run:
+
+```
+$ nix-shell
+```
+
+#### Nix-flake user
+If you want to use this repo with `flakes` feature, please enable it using the following method:
 
 **Linux and Windows Subsystem Linux 2 (WSL2)**
 

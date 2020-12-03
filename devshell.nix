@@ -35,12 +35,10 @@ mkDevShell {
 
   bash = {
     extra = ''
-      unset GOPATH GOROOT
       export LD_INCLUDE_PATH="$DEVSHELL_DIR/include"
       export LD_LIB_PATH="$DEVSHELL_DIR/lib"
     '';
-    interactive = ''
-    '';
+    interactive = '''';
   };
 
   env = {
@@ -50,7 +48,6 @@ mkDevShell {
     PGDATABASE="todomvc_db";
     PGUSER="todomvc_dbuser";
     PGPASSWORD="todomvc_dbpass";
-    GO111MODULE="on";
   };
 
   packages = [
@@ -63,11 +60,12 @@ mkDevShell {
         jsaddle jsaddle-warp transformers warp websockets todo-common servant-jsaddle miso-jsaddle lens text http-proxy http-client mtl
       ])
     )
+
     # build tools
-    ### Rust
+    ## Rust
 	todomvc.nix.rust
 
-    ### haskell tools
+    ## haskell tools
     ### haskellPackages
     # todomvc.nix.haskellBackend
     # (todomvc.todoHaskellPackages.ghcWithPackages
@@ -77,14 +75,6 @@ mkDevShell {
     #   ])
     # )
     # todomvc.todoHaskellPackages.cabal-install
-    ### Go
-    go
-    gopls
-    gopkgs
-    golint
-    reflex
-    gocode
-    go-outline
 
     ### Others
     binutils
