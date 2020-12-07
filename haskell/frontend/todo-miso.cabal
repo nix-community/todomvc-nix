@@ -1,0 +1,45 @@
+name:                todo-miso
+version:             0.1.0.0
+synopsis:            First miso app
+category:            Web
+build-type:          Simple
+cabal-version:       2.0
+
+executable todo-miso
+  main-is:
+    Main.hs
+  hs-source-dirs: src-bin
+  build-depends:
+    base, miso, todo-common, servant, containers, lens, text, mtl
+  if !impl(ghcjs)
+    build-depends:
+       jsaddle, jsaddle-warp, transformers, warp, websockets, servant-jsaddle,
+        http-proxy, http-client
+  default-language:
+     Haskell2010
+  default-extensions:
+    BangPatterns
+    DataKinds
+    DataKinds
+    DeriveAnyClass
+    DeriveGeneric
+    DerivingStrategies
+    FlexibleContexts
+    FlexibleInstances
+    GADTs
+    GeneralizedNewtypeDeriving
+    InstanceSigs
+    LambdaCase
+    NamedFieldPuns
+    NumericUnderscores
+    OverloadedStrings
+    PatternGuards
+    PolyKinds
+    QuasiQuotes
+    RankNTypes
+    RecordWildCards
+    ScopedTypeVariables
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeOperators

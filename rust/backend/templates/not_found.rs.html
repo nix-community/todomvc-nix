@@ -1,0 +1,12 @@
+@use super::{header_html, footer_html};
+
+@()
+
+@:header_html("Not Found")
+<h1>Not Found</h1>
+
+<p>This page does not exist!</p>
+
+<a href="/">Go home</a>
+
+@:footer_html()

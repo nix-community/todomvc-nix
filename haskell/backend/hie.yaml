@@ -1,0 +1,11 @@
+cradle:
+  cabal:
+    # - path: ./test
+    #   component: test:ase-test
+    - path: "./backend/haskell/src"
+      component: "lib:todo-haskell"
+    - path: "./backend/haskell/app"
+      component: "exe:todo-haskell"
+dependencies:
+  - shell.nix
+  - flake.nix

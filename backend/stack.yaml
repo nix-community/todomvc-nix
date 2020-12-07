@@ -1,6 +1,0 @@
-flags: {}
-packages:
-- todobackend-common
-- todobackend-scotty
-resolver: lts-8.23
-system-ghc: true

@@ -1,3 +1,13 @@
 result
 result-*
 *.sqlite3
+target
+node_modules/
+frontend/rust/devhtml/js/
+.direnv/
+dist-newstyle/
+*/dist-newstyle
+dist/
+*/dist
+.ghc.*
+*/.ghc.*

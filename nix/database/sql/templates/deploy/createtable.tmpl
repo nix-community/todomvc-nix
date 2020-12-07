@@ -1,0 +1,11 @@
+BEGIN;
+
+SET search_path TO [% IF schema ][% schema %],[% END %]public;
+
+CREATE TABLE [% IF table %][% table %][% ELSE %][% change %][% END %] (
+    [% FOREACH col IN column -%]
+        [% col %] TEXT NOT NULL[% loop.last ? '' : ',' %]
+    [% END -%]
+);
+
+COMMIT;

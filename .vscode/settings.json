@@ -1,0 +1,19 @@
+{
+    "rust-client.disableRustup": true,
+    "rust-client.autoStartRls": false,
+    "rust-analyzer.linkedProjects": [
+        "backend/rust/Cargo.toml",
+        "common/rust/Cargo.toml",
+        "frontend/rust/Cargo.toml"
+    ],
+    "rust-analyzer.rustfmt.extraArgs": [
+        "--config-path=backend/rust",
+        "--config-path=common/rust",
+        "--config-path=frontend/rust",
+    ],
+    "go.inferGopath": false,
+    "go.toolsEnvVars": {
+        "GO111MODULE": "on"
+    },
+    "haskell.logFile": "/home/rizary/hls.log",
+}

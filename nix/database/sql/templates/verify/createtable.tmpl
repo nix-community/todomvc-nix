@@ -1,0 +1,7 @@
+BEGIN;
+
+SET search_path TO [% IF schema ][% schema %],[% END %]public;
+SELECT [% column.join(', ') %]
+    FROM [% IF table %][% table %][% ELSE %][% change %][% END %];
+
+ROLLBACK;
