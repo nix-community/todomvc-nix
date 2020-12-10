@@ -59,8 +59,6 @@
         {
           legacyPackages = pkgs.todomvc;
 
-          defaultPackage = pkgs.todomvc.nix.haskellBackend;
-
           packages = flake-utils.lib.flattenTree pkgs.todomvc;
 
           devShell = import ./devshell.nix { inherit pkgs; };
