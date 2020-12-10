@@ -4,22 +4,16 @@
   # $ nix flake update --recreate-lock-file
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
   inputs.flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+    url = "github:numtide/flake-utils";
+    # Use the same version of nixpkgs as this project.
+    inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.devshell = {
-      url = "github:numtide/devshell/master";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-  };
+  inputs.devshell.url = "github:numtide/devshell/master";
+
+  # Rust dependencies
   inputs.naersk = {
-      url = "github:nmattia/naersk";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+    url = "github:nmattia/naersk";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
   # Only for example, use the .url for simplicity
   inputs.mozilla-overlay = {
@@ -38,7 +32,7 @@
 
   outputs = { self, nixpkgs, naersk, mozilla-overlay, flake-utils, devshell, polysemy, http-media, servant, miso, servant-jsaddle }:
     {
-      overlay = import ./overlay.nix { inherit  polysemy http-media servant miso servant-jsaddle; };
+      overlay = import ./overlay.nix { inherit polysemy http-media servant miso servant-jsaddle; };
     }
     //
     (
@@ -48,18 +42,18 @@
             inherit system;
             # Makes the config pure as well. See <nixpkgs>/top-level/impure.nix:
             config = {
-                allowBroken = true;
-                permittedInsecurePackages = [
-                  "openssl-1.0.2u"
-                ];
+              allowBroken = true;
+              permittedInsecurePackages = [
+                "openssl-1.0.2u"
+              ];
             };
             overlays = [
-                (import mozilla-overlay)
-                devshell.overlay
+              (import mozilla-overlay)
+              devshell.overlay
 
-                naersk.overlay
-                self.overlay
-             ];
+              naersk.overlay
+              self.overlay
+            ];
           };
         in
         {
