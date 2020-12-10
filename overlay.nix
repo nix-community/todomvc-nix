@@ -9,7 +9,12 @@ let
 in
 {
   todomvc = rec {
+    # This will make all package available using `todomvc.<package-name>`
     inherit polysemy http-media servant servant-jsaddle misoPkgs;
+
+    # Both `misoDev` and `todoHaskellMisoDev` purpose are for development
+    # It is in the top-level `todomvc` just for making GHC works in the shell environment.
+    # `all-cabal-hashes` is necessary to build servant-jsaddle
     misoDev = (misoPkgs.pkgs.haskell.packages.ghc865.override {
       all-cabal-hashes = misoPkgs.pkgs.fetchurl {
         url = "https://github.com/commercialhaskell/all-cabal-hashes/archive/8c7bdd9ad4bc3671b4214e32766873d443af2622.tar.gz";
@@ -38,6 +43,8 @@ in
       };
     };
 
+    # `todoHaskellPackages` is for Haskell's backend.
+    # It is separated from Haskell's frontend package which use Miso.
     todoHaskellPackages = prev.haskell.packages.ghc8102.extend (self: super: {
       http-media = self.callCabal2nix "http-media" http-media { };
       pantry = noCheck (self.callHackage "pantry" "0.5.1.3" { });
@@ -55,27 +62,6 @@ in
       rustc = nix.rust;
       cargo = nix.rust;
     };
-    # (prev.makeRustPlatform { cargo = nix.rust; rustc = nix.rust; }).buildRustPackage {
-    #   pname = "rust-backend";
-    #   version = "0.1.0";
-    #   src = ./rust/backend;
-    #   cargoSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-    # #   vendorSha256 = "0lviz7l5zbghyfkp0lvlv8ykpak5hhkfal8d7xwvpsm8q3sghc8a";
-    #   target="x86_64-unknown-linux-musl";
-    #   RUSTC_BOOTSTRAP=1;
-    #   # Needed to get openssl-sys to use pkgconfig.
-    #   OPENSSL_NO_VENDOR = 1;
-    #   doCheck = false;
-
-    #   nativeBuildInputs = [
-    #     prev.pkgconfig
-    #     prev.glibc
-    #   ];
-    #   buildInputs = [
-    #     prev.openssl.dev
-    #   ];
-    # };
-
   };
 
 }

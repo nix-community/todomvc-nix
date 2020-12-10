@@ -5,6 +5,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
+        "build": "rollup -c rollup.release.js",
         "start": "run-p todo_backend todo_watch",
         "todo_backend": "cd ../../backend/rust && cargo run",
         "todo_watch": "yarn run todo_clean && yarn run todo_frontend ",
@@ -12,7 +13,8 @@
         "todo_frontend": "rollup -c rollup.dev.js --watch"
     },
     "dependencies": {
-        "@wasm-tool/rollup-plugin-rust": "^1.0.5"
+        "@wasm-tool/rollup-plugin-rust": "^1.0.5",
+        "wasm-pack": "^0.9.1"
     },
     "devDependencies": {
         "npm-run-all": "^4.1.5",
@@ -20,7 +22,6 @@
         "rollup": "^2.29.0",
         "rollup-plugin-livereload": "^2.0.0",
         "rollup-plugin-serve": "^1.0.4",
-        "rollup-watch": "^4.3.1",
-        "wasm-pack": "^0.9.1"
+        "rollup-watch": "^4.3.1"
     }
 }

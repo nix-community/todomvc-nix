@@ -65,8 +65,9 @@ mkDevShell {
 
   packages = [
     # Haskell
-
-    # todomvc.reflexDev.ghc.frontend
+    ## Frontend
+    # Both `cabal-install` and `ghcWithPackages` is necessary for developing Miso app
+    # With `ghcWithPackages`, `ghc` will detect all dependencies when in `nix develop` environment
     todomvc.todoHaskellMisoDev.haskell.packages.ghc865.cabal-install
     (todomvc.todoHaskellMisoDev.haskell.packages.ghc865.ghcWithPackages (p: with p; [
       http-client
@@ -85,13 +86,10 @@ mkDevShell {
     ])
     )
 
-    # build tools
-    ## Rust
-    todomvc.nix.rust
-
-    ## haskell tools
-    ### haskellPackages
-    # todomvc.nix.haskellBackend
+    ## Backend
+    # When developing Miso app, `haskellBackend` is needed to test the haskell's backend service.
+    todomvc.nix.haskellBackend
+    # Uncomment this code below to develop Haskell`s backend.
     # (todomvc.todoHaskellPackages.ghcWithPackages
     #   (p: with p; [
     #     aeson aeson-pretty http-types todo-common warp zlib lens polysemy text
@@ -99,6 +97,10 @@ mkDevShell {
     #   ])
     # )
     # todomvc.todoHaskellPackages.cabal-install
+
+    # Rust
+    ## Backend
+    todomvc.nix.rust
 
     ### Others
     binutils
@@ -112,9 +114,12 @@ mkDevShell {
     pkgconfig
     zlib.dev
 
-    # frontend
+    # Javascript related frontend
+    # It is also used for Rust's frontend development
     nodejs-12_x
+    wasm-pack
     yarn
+    yarn2nix
 
     # database
     postgresql

@@ -6,7 +6,6 @@ let
 in
 #Build a new overlay with our own packages
 with todomvc;
-
 todoHaskellPackages.developPackage {
   root = ../../haskell/backend;
   name = "todo-haskell";

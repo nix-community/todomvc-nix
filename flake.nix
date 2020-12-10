@@ -24,11 +24,13 @@
   };
 
   # Haskell dependencies
+  # This is haskell's dependencies for
   inputs.polysemy = { url = "github:polysemy-research/polysemy"; flake = false; };
   inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
   inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };
-  inputs.miso = { url = "github:dmjio/miso/master"; flake = false; };
   inputs.servant-jsaddle = { url = "github:haskell-servant/servant-jsaddle/master"; flake = false; };
+  # Miso uses its own nixpkgs, thus it should be imported.
+  inputs.miso = { url = "github:dmjio/miso/master"; flake = false; };
 
   outputs = { self, nixpkgs, naersk, mozilla-overlay, flake-utils, devshell, polysemy, http-media, servant, miso, servant-jsaddle }:
     {

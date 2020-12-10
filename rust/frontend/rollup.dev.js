@@ -9,9 +9,9 @@ export default {
     output: {
         dir: "devhtml/js",
         format: "iife",
+        sourcemap: true,
         chunkFileNames: "[name].js",
-        assetFileNames: "assets/[name][extname]",
-        sourcemap: true
+        assetFileNames: "assets/[name][extname]"
     },
     plugins: [
         rust({
@@ -26,6 +26,7 @@ export default {
             contentBase: 'devhtml',
             open: true,
             verbose: true,
+            debug: false,
             // historyApiFallback: true,
         }),
 

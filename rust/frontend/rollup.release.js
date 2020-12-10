@@ -5,7 +5,7 @@ export default {
         index: "./Cargo.toml",
     },
     output: {
-        dir: "devhtml/js",
+        dir: "js",
         format: "iife",
         sourcemap: true,
         chunkFileNames: "[name]-[hash].js",
@@ -14,8 +14,8 @@ export default {
     plugins: [
         rust({
             serverPath: "/js/",
-            debug: true,
-            cargoArgs: ["--features", "develop"],
+            debug: false,
+            verbose: true
         }),
     ],
 };
