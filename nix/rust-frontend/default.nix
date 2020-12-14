@@ -93,6 +93,7 @@ stdenv.mkDerivation {
     export HOME=$PWD/yarn_home
     export PATH=${yarnPkg}/libexec/${package.name}/node_modules/.bin:$PATH
     cp ${pkgs.wasm-pack}/bin/wasm-pack .
+    pwd
     yarn build
   '';
 

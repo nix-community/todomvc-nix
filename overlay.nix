@@ -5,7 +5,6 @@ let
   noHaddock = p: final.haskell.lib.dontHaddock p;
   fast = p: noHaddock (noCheck p);
   misoPkgs = import miso { system = final.system; allowBroken = true; };
-
 in
 {
   todomvc = rec {
@@ -56,12 +55,11 @@ in
       todo-haskell = self.callCabal2nix "todo-haskell" ./haskell/backend { };
     });
     nix = prev.callPackage ./nix { };
-    rust-backend = prev.naersk.buildPackage {
+    rust-backend = final.naersk.buildPackage {
       src = ./rust/backend;
       remapPathPrefix = true;
-      rustc = nix.rust;
-      cargo = nix.rust;
+      rustc = nix.rustOverlay;
+      cargo = nix.rustOverlay;
     };
   };
-
 }

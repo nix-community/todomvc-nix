@@ -2,7 +2,7 @@
 {
   haskellBackend = pkgs.callPackage ./haskell { };
   haskellMiso = pkgs.callPackage ./haskell-miso { };
-  rust = pkgs.callPackage ./rust { };
+  rustOverlay = pkgs.callPackage ./rust-overlay { };
   rustFrontend = pkgs.callPackage ./rust-frontend { };
   database = pkgs.callPackage ./database { };
 }

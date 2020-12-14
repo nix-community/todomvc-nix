@@ -100,7 +100,7 @@ mkDevShell {
 
     # Rust
     ## Backend
-    todomvc.nix.rust
+    todomvc.nix.rustOverlay
 
     ### Others
     binutils

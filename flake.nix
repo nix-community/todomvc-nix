@@ -24,12 +24,12 @@
   };
 
   # Haskell dependencies
-  # This is haskell's dependencies for
+  # This is haskell's dependencies for both Haskell backend and frontend.
   inputs.polysemy = { url = "github:polysemy-research/polysemy"; flake = false; };
   inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
   inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };
   inputs.servant-jsaddle = { url = "github:haskell-servant/servant-jsaddle/master"; flake = false; };
-  # Miso uses its own nixpkgs, thus it should be imported.
+  # Miso uses its own nixpkgs, thus we imported it to use its pinned nixpkgs on the `overlay.nix`.
   inputs.miso = { url = "github:dmjio/miso/master"; flake = false; };
 
   outputs = { self, nixpkgs, naersk, mozilla-overlay, flake-utils, devshell, polysemy, http-media, servant, miso, servant-jsaddle }:
@@ -49,13 +49,7 @@
                 "openssl-1.0.2u"
               ];
             };
-            overlays = [
-              (import mozilla-overlay)
-              devshell.overlay
-
-              naersk.overlay
-              self.overlay
-            ];
+            overlays = [ self.overlay (import mozilla-overlay) devshell.overlay naersk.overlay ];
           };
         in
         {
