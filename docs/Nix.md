@@ -165,9 +165,9 @@ We have simplify the code a bit and just put reference number for better explana
 
 **(6)** If you refer to this project's overlay, you can see that we put every third-party's overlay in here, such as `devshell.overlay`, `naersk.overlay`, and `mozilla-overlay`. Note that we use `import` on `mozilla-overlay` because flakes feature is not available yet.
 
-**(7)** We put our project's umbrella here, in this case `todomvc` attribute we have in `overlay.nix`. It is used for an o
+**(7)** `legacyPcakages` is being used to hold the current implementation of nixpkgs. It can hold any value (e.g. derivation, number, etc.) and when we run `nix-build`, then `nix-build` will build all attributes in the attributes set. It will also scan attribute for spceial property and build the whole tree.
 
-**(8)** We use `flattentree` because flakes feature insists on having a flat attribute set of derivations in various places like the `packages` and `checks` attributes. Similar to `legacyPackages`, the `packages` attribute also refer to our project's umbrella.
+**(8)** We use `flattenTree` because flakes feature insists on having a flat attribute set of derivations in various places like the `packages` and `checks` attributes. Similar to `legacyPackages`, the `packages` attribute also refer to our flake project. The differences are `packages` build one attribute at the time, only accept one value which is derivation, and it doesn't recurse. That is why we use `flattenTree` to filters out value that is not a derivation, and make it a single `attributeSet`.
 
 **(9)** The `devShell` attribute is self-explanatory. Yes, it is used whenever we want to enter into nix's shell using either `nix shell` or `nix develop`.
 
