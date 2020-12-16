@@ -1,0 +1,7 @@
+with-compiler: ghc
+packages:
+  backend/
+  frontend/
+  common/
+tests: false
+benchmarks: false

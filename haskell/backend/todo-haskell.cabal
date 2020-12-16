@@ -22,9 +22,6 @@ common core
   build-depends:
       -- Local Dependencies
       todo-common
-
-    , aeson
-    , aeson-pretty
     , base
     , http-types
     , lens

@@ -10,10 +10,7 @@ use cfg_if::cfg_if;
 
 #[wasm_bindgen(start)]
 pub async fn main_js() -> Result<(), JsValue>{
-    #[cfg(debug_assertions)]
     setup_logger();
-    console_error_panic_hook::set_once();
-
     dominator::append_dom(&dominator::get_id("app"), App::render(App::deserialize().await));
 
     Ok(())

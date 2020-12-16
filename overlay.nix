@@ -10,72 +10,47 @@ in
 {
   todomvc = rec {
     inherit polysemy http-media servant servant-jsaddle misoPkgs;
-    misoDev = (misoPkgs.pkgs.haskell.packages.ghc865.override {
+    haskellPkg = (misoPkgs.pkgs.haskell.packages.ghc865.override {
       all-cabal-hashes = misoPkgs.pkgs.fetchurl {
-        url = "https://github.com/commercialhaskell/all-cabal-hashes/archive/8c7bdd9ad4bc3671b4214e32766873d443af2622.tar.gz";
-        sha256 = "0q9qdpvn3c64rwnafcqkzzyi4z72mvvwmvn06d89fnzfpqjxvwx2";
+        url = "https://github.com/commercialhaskell/all-cabal-hashes/archive/6d6bccc7fe2eb2bdf893d65a3cdaf4204819d91f.tar.gz";
+        sha256 = "sha256-CwtDHp4XYHX+M5kfywR6ySbl0Hx1dSxpkGz+WdFA08k=";
       };
-      }).extend (self: super: {
-        clay = self.callHackage "clay" "0.13.3" {};
-        websockets = self.callHackage "websockets" "0.12.6.0" {};
-        http-client = self.callHackage "http-client" "0.6.4.1" {};
-        http-proxy = fast super.http-proxy;
-        servant-client-core = self.callHackage "servant-client-core" "0.16" {};
-        servant = self.callHackage "servant" "0.16" {};
-        servant-server = self.callHackage "servant-server" "0.16" {};
-        servant-lucid = self.callHackage "servant-lucid" "0.9" {};
-        servant-jsaddle = noCheck (self.callCabal2nix "servant-jsaddle" servant-jsaddle {});
-        jsaddle-warp = fast super.jsaddle-warp;
-        todo-common = self.callCabal2nix "todo-common" ./haskell/common { };
-        todo-miso = self.callCabal2nix "todo-miso" ./haskell/frontend { miso = misoPkgs.miso-jsaddle; };
-      }
-    );
-    todoHaskellMisoDev = misoPkgs.pkgs // {
-      haskell = misoPkgs.pkgs.haskell // {
-          packages = misoPkgs.pkgs.haskell.packages // {
-              ghc865 = misoDev;
-          };
-      };
-    };
+    }).extend (self: super: {
+      aeson = noCheck (self.callHackage "aeson" "1.4.4.0" { });
+      clay = self.callHackage "clay" "0.13.3" { };
+      websockets = self.callHackage "websockets" "0.12.6.0" { };
+      http-client = self.callHackage "http-client" "0.6.4.1" { };
+      http-proxy = fast super.http-proxy;
+      servant-client-core = self.callHackage "servant-client-core" "0.16" { };
+      servant = self.callHackage "servant" "0.16" { };
+      servant-server = self.callHackage "servant-server" "0.16" { };
+      servant-lucid = self.callHackage "servant-lucid" "0.9" { };
+      servant-jsaddle = noCheck (self.callCabal2nix "servant-jsaddle" servant-jsaddle { });
+      jsaddle-warp = fast super.jsaddle-warp;
+      todo-common = self.callCabal2nix "todo-common" ./haskell/common { };
+      todo-miso = self.callCabal2nix "todo-miso" ./haskell/frontend { miso = misoPkgs.miso-jsaddle; };
 
-    todoHaskellPackages = prev.haskell.packages.ghc8102.extend (self: super: {
-      http-media = self.callCabal2nix "http-media" http-media {};
-      pantry = noCheck (self.callHackage "pantry" "0.5.1.3" {});
-      polysemy = self.callCabal2nix "polysemy" polysemy {};
-      servant = self.callCabal2nix "servant" (servant + "/servant") {};
-      servant-server = self.callCabal2nix "servant-server" (servant + "/servant-server") {};
-      time-compat = fast super.time-compat;
-      todo-common = self.callCabal2nix "todo-common" ./haskell/common {};
-      todo-haskell = self.callCabal2nix "todo-haskell" ./haskell/backend {};
+      # Backend specific dependencies.
+      #
+      # We build pantry to first-class-families because these packages are
+      # polysemy dependencies which is not in GHC 8.6.5 package set.
+      pantry = noCheck (self.callHackage "pantry" "0.5.1.3" { });
+      type-errors = self.callHackage "type-errors" "0.2.0.0" { };
+      type-errors-pretty = self.callHackage "type-errors-pretty" "0.0.1.1" { };
+      first-class-families = self.callHackage "first-class-families" "0.5.0.0" { };
+      th-abstraction = self.callHackage "th-abstraction" "0.3.1.0" { };
+      th-lift = self.callHackage "th-lift" "0.8.0.1" { };
+      polysemy = fast (self.callHackage "polysemy" "1.4.0.0" { });
+      time-compat = fast (self.callHackage "time-compat" "1.9.2.2" { });
+      todo-haskell = self.callCabal2nix "todo-haskell" ./haskell/backend { };
     });
-    nix = prev.callPackage ./nix { };
-    rust-backend = prev.naersk.buildPackage {
-      src = ./rust/backend;
-      remapPathPrefix = true;
-      rustc = nix.rust;
-      cargo = nix.rust;
+    todoHaskell = misoPkgs.pkgs // {
+      haskell = misoPkgs.pkgs.haskell // {
+        packages = misoPkgs.pkgs.haskell.packages // {
+          ghc865 = haskellPkg;
+        };
+      };
     };
-    # (prev.makeRustPlatform { cargo = nix.rust; rustc = nix.rust; }).buildRustPackage {
-    #   pname = "rust-backend";
-    #   version = "0.1.0";
-    #   src = ./rust/backend;
-    #   cargoSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-    # #   vendorSha256 = "0lviz7l5zbghyfkp0lvlv8ykpak5hhkfal8d7xwvpsm8q3sghc8a";
-    #   target="x86_64-unknown-linux-musl";
-    #   RUSTC_BOOTSTRAP=1;
-    #   # Needed to get openssl-sys to use pkgconfig.
-    #   OPENSSL_NO_VENDOR = 1;
-    #   doCheck = false;
-
-    #   nativeBuildInputs = [
-    #     prev.pkgconfig
-    #     prev.glibc
-    #   ];
-    #   buildInputs = [
-    #     prev.openssl.dev
-    #   ];
-    # };
-
+    nix = prev.callPackage ./nix { };
   };
-
 }

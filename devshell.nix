@@ -4,7 +4,18 @@ with pkgs;
 
 mkDevShell {
   name = "todomvc-nix";
-  motd = "otherthing";
+  motd = ''
+    Welcome to the todomvc-nix application.
+
+    If you see this message, it means your are inside the Nix shell.
+
+    Command available:
+    - pginit: initial PostgreSQL setup
+    - pgstart: start psql service
+    - pgstop: stop psql service
+    - migrate: migrate the database
+    - deletdb: remove the database completely.
+  '';
   commands = [
     {
       name = "pginit";
@@ -42,12 +53,15 @@ mkDevShell {
   };
 
   env = {
-    DATABASE_URL="postgresql://todomvc_dbuser:todomvc_dbpass@localhost:5432/todomvc_db";
-    PGHOST="localhost";
-    PGPORT="5432";
-    PGDATABASE="todomvc_db";
-    PGUSER="todomvc_dbuser";
-    PGPASSWORD="todomvc_dbpass";
+    DATABASE_URL = "postgresql://todomvc_dbuser:todomvc_dbpass@localhost:5432/todomvc_db";
+    PGHOST = "localhost";
+    PGPORT = "5432";
+    PGDATABASE = "todomvc_db";
+    PGUSER = "todomvc_dbuser";
+    PGPASSWORD = "todomvc_dbpass";
+    OPENSSL_DIR = "${openssl.bin}/bin";
+    OPENSSL_LIB_DIR = "${openssl.out}/lib";
+    OPENSSL_INCLUDE_DIR = "${openssl.out.dev}/include";
   };
 
   packages = [
@@ -55,41 +69,61 @@ mkDevShell {
     # Haskell
 
     # todomvc.reflexDev.ghc.frontend
-    todomvc.todoHaskellMisoDev.haskell.packages.ghc865.cabal-install
-    (todomvc.todoHaskellMisoDev.haskell.packages.ghc865.ghcWithPackages (p: with p; [
-        jsaddle jsaddle-warp transformers warp websockets todo-common servant-jsaddle miso-jsaddle lens text http-proxy http-client mtl
-      ])
-    )
+    todomvc.todoHaskell.haskell.packages.ghc865.cabal-install
+    (todomvc.todoHaskell.haskell.packages.ghc865.ghcWithPackages (p: with p; [
+      aeson
+      aeson-pretty
+      http-types
+      todo-common
+      zlib
+      polysemy
+      todo-haskell
+      unliftio
+      wai
+      wai-logger
+      wai-extra
+      servant
+      servant-server
+      postgresql-simple
+      jsaddle
+      jsaddle-warp
+      transformers
+      warp
+      websockets
+      todo-common
+      servant-jsaddle
+      miso-jsaddle
+      lens
+      text
+      http-proxy
+      http-client
+      mtl
+    ]))
 
     # build tools
     ## Rust
-	todomvc.nix.rust
-
-    ## haskell tools
-    ### haskellPackages
-    # todomvc.nix.haskellBackend
-    # (todomvc.todoHaskellPackages.ghcWithPackages
-    #   (p: with p; [
-    #     aeson aeson-pretty http-types todo-common warp zlib lens polysemy text
-    #     unliftio wai wai-logger wai-extra warp servant servant-server postgresql-simple
-    #   ])
-    # )
-    # todomvc.todoHaskellPackages.cabal-install
+    todomvc.nix.rustOverlay
+    wasm-bindgen-cli
+    binaryen
 
     ### Others
     binutils
     pkgconfig
     openssl
+    openssl.dev
     gcc
     glibc
     zlib.dev
     ncurses
     icu.dev
     gmp.dev
+    nixpkgs-fmt
 
     # frontend
     nodejs-12_x
     yarn
+    yarn2nix
+    nodePackages.node2nix
 
     # database
     postgresql
