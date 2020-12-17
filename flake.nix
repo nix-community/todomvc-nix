@@ -3,24 +3,15 @@
   # To update all inputs:
   # $ nix flake update --recreate-lock-file
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
-  inputs.flake-utils = {
-    url = "github:numtide/flake-utils";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
-  };
-  inputs.devshell = {
-    url = "github:numtide/devshell/master";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
-  };
-  inputs.naersk = {
-    url = "github:nmattia/naersk";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
-  };
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.flake-utils.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.devshell.url = "github:numtide/devshell/master";
+  # Use the same version of nixpkgs as this project.
+  inputs.devshell.inputs.nixpkgs.follows = "nixpkgs";
+
+  # Rust dependencies
+  inputs.naersk.url = "github:nmattia/naersk";
+  inputs.naersk.inputs.nixpkgs.follows = "nixpkgs";
   # Only for example, use the .url for simplicity
   inputs.mozilla-overlay = {
     type = "github";
@@ -30,11 +21,13 @@
   };
 
   # Haskell dependencies
+  # This is haskell's dependencies for both Haskell backend and frontend.
   inputs.polysemy = { url = "github:polysemy-research/polysemy"; flake = false; };
   inputs.http-media = { url = "github:zmthy/http-media/develop"; flake = false; };
   inputs.servant = { url = "github:haskell-servant/servant"; flake = false; };
-  inputs.miso = { url = "github:dmjio/miso/master"; flake = false; };
   inputs.servant-jsaddle = { url = "github:haskell-servant/servant-jsaddle/master"; flake = false; };
+  # Miso uses its own nixpkgs, thus we imported it to use its pinned nixpkgs on the `overlay.nix`.
+  inputs.miso = { url = "github:dmjio/miso/master"; flake = false; };
 
   outputs = { self, nixpkgs, naersk, mozilla-overlay, flake-utils, devshell, polysemy, http-media, servant, miso, servant-jsaddle }:
     {
@@ -64,8 +57,6 @@
         in
         {
           legacyPackages = pkgs.todomvc;
-
-          defaultPackage = pkgs.todomvc.nix.rustFrontend;
 
           packages = flake-utils.lib.flattenTree pkgs.todomvc;
 

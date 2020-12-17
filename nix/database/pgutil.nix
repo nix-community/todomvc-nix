@@ -1,5 +1,5 @@
 { writeScript, stdenv }:
-# 1. Change .pgdata location to $HOME/.pgdata to anticipate permission error
+# Change .pgdata location to $HOME/.pgdata to anticipate permission error
 {
   start_pg = writeScript "start-pg"
     ''

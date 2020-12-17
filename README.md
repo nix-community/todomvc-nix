@@ -54,7 +54,7 @@ Make sure that you have the following package installed in your machine:
 This repository can be used using plain `nix-build` or `nix-shell`. This is possible with the help of `flake-compat` as mentioned in [default.nix](./default.nix). To build the package, just run:
 
 ```
-$ nix-build -A defaultNix
+$ nix-build -A defaultNix.legacyPackages.x86_64-linux.nix.haskellBackend
 ```
 
 and to enter into Nix shell, run:

@@ -17,6 +17,7 @@ import qualified Data.Map as M
 import qualified Data.List as L
 import           Data.Bool
 import qualified Data.Text as Text
+import qualified Network.URI as Network
 -- | JSAddle import
 #ifndef __GHCJS__
 import           Language.Javascript.JSaddle.Warp as JSaddle
@@ -69,30 +70,9 @@ insertTodo
 
 #ifndef __GHCJS__
 runApp :: JSM () -> IO ()
-runApp f =
+runApp app =
     Warp.runSettings (Warp.setPort 8080 (Warp.setTimeout 3600 Warp.defaultSettings)) =<<
-      JSaddle.jsaddleOr defaultConnectionOptions (f >> syncPoint) JSaddle.jsaddleApp
---   proxyApp <- httpProxyApp proxySettings <$> newManager defaultManagerSettings
---   jsaddleApp <-
---     JSaddle.jsaddleOr defaultConnectionOptions (f >> Miso.syncPoint) proxyApp
---   Warp.runSettings settings jsaddleApp
---   where
---     settings = Warp.setPort 8080
---              . Warp.setTimeout 3600
---              $ Warp.defaultSettings
---     proxySettings = defaultProxySettings
---        { proxyPort = 8189
---        , proxyRequestModifier = rewrite
---        }
---     path req = "http://localhost:8186" <> Proxy.requestPath req
---     rewrite req = return $ Right req {Proxy.requestPath = path req}
-    -- f = do
-    --   uri <- Miso.getCurrentURI
-    --   a <- app
-    --   Miso.startApp $ a uri
-
---   Warp.runSettings (Warp.setPort 8080 (Warp.setTimeout 3600 Warp.defaultSettings)) =<<
---     JSaddle.jsaddleOr defaultConnectionOptions (f >> syncPoint) JSaddle.jsaddleApp
+      JSaddle.jsaddleOr defaultConnectionOptions (app >> syncPoint) JSaddle.jsaddleApp
 
 servantErrorToS ::
   forall a b.
@@ -102,7 +82,7 @@ servantErrorToS c = do
   bUrl <- serverBaseUrl
   S.runClientM c (mkClientEnv bUrl) >>= \case
     Right x -> return $ Right x
-    Left x -> return . Left $ show x
+    Left e -> return . Left $ show e
 
 runClientIO ::
   (Either String b -> msg) ->
@@ -114,8 +94,6 @@ runClientIO constructor c = scheduleIO $ do
 serverBaseUrl :: JSM BaseUrl
 serverBaseUrl = parseBaseUrl serverRootPath
 #else
-runApp :: IO () -> IO ()
-runApp app = miso =<< app
 
 servantErrorToS ::
   forall a b.
@@ -125,24 +103,36 @@ servantErrorToS c = do
   bUrl <- serverBaseUrl
   S.runClientM c (mkClientEnv bUrl) >>= \case
     Right x -> return $ Right x
-    Left x -> return . Left $ x
+    Left e -> return . Left $ MS.toMisoString (show e)
+
+runClientIO ::
+  (Either MisoString b -> msg) ->
+  ClientM b ->
+  Transition msg model ()
+runClientIO constructor c = scheduleIO $ do
+  constructor <$>  (servantErrorToS c)
 
 serverBaseUrl :: IO BaseUrl
 serverBaseUrl = parseBaseUrl serverRootPath
 #endif
 
 -- | Entry point for a miso application
+#ifndef __GHCJS__
 main :: IO ()
 main = runApp $ startApp App {..}
+#else
+main :: JSM ()
+main = miso $ \networkURI -> App {..}
+#endif
   where
-    initialAction = ListTodos -- initial action to be executed on application load
-    model  = emptyModel                   -- initial model
-    update = fromTransition . updateModel          -- update function
+    initialAction = ListTodos     -- initial action to be executed on application load
+    model  = emptyModel           -- initial model
+    update = fromTransition . updateModel -- update function
     view   = viewModel            -- view function
     events = defaultEvents        -- default delegated events
     subs   = []                   -- empty subscription list
     mountPoint = Nothing          -- mount point for application (Nothing defaults to 'body')
-    --logLevel = Off                -- used during prerendering to see if the VDOM and DOM are in synch (only used with `miso` function)
+    logLevel = Off                -- used during prerendering to see if the VDOM and DOM are in synch (only used with `miso` function)
 
 -- | Type synonym for an application model
 data Model = Model
@@ -167,7 +157,11 @@ emptyModel = Model
 data Msg
   = NoOp
   | ListTodos
+#ifndef __GHCJS__
   | UpdateTodos (Either String [TodoResponse])
+#else
+  | UpdateTodos (Either MisoString [TodoResponse])
+#endif
   | UpdateField MisoString
 --   | EditingEntry Int Bool
 --   | UpdateEntry Int TodoResponse

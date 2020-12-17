@@ -23,6 +23,7 @@ cfg_if! {
             console_error_panic_hook::set_once();
             std::panic::set_hook(Box::new(console_error_panic_hook::hook));
             log::info!("rust logging enabled!!!");
+            console_error_panic_hook::set_once();
         }
     } else {
         fn setup_logger() {

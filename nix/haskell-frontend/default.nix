@@ -1,4 +1,7 @@
 { todomvc }:
+# We declare `with todomvc.misoPkgs` in order to avoid writing
+# `todomvc.misoPkgs.pkgs` in every line. In this case, `pkgs` used
+# in this file is `pkgs` attribute from `misoPkgs`.
 with todomvc.misoPkgs;
 let
   haskell-lib = pkgs.haskell.lib;
@@ -6,8 +9,12 @@ let
   noHaddock = p: pkgs.haskell.lib.dontHaddock p;
   fast = p: noHaddock (noCheck p);
 in
-pkgs.haskell.packages.ghcjs86.override {
-  overrides = final: prev: {
+((pkgs.haskell.packages.ghcjs86.override {
+    all-cabal-hashes = pkgs.fetchurl {
+        url = "https://github.com/commercialhaskell/all-cabal-hashes/archive/90e9a5c0282099dd8aa5a369b2b474d0dc354ab8.tar.gz";
+        sha256 = "sha256-2bEC/2b+Fa+yCg72upOHKQtEzCbf6lYjpTN0nT23nZw=";
+      };
+}).extend (final: prev: {
     doctest = null;
     QuickCheck = noCheck prev.QuickCheck;
     tasty-quickcheck = noCheck prev.tasty-quickcheck;
@@ -20,9 +27,10 @@ pkgs.haskell.packages.ghcjs86.override {
     lens = noCheck prev.lens;
     semigroupoids = noCheck prev.semigroupoids;
     http-types = noCheck prev.http-types;
-    servant = noCheck prev.servant;
-    servant-jsaddle = prev.callCabal2nix "servant-jsaddle" todomvc.servant-jsaddle { };
+    servant = prev.callHackage "servant" "0.16" { };
+    servant-client-core = prev.callHackage "servant-client-core" "0.16" { };
+    servant-jsaddle = final.callCabal2nix "servant-jsaddle" todomvc.servant-jsaddle { };
     todo-common = prev.callCabal2nix "todo-common" ./../../haskell/common { };
     todo-miso = prev.callCabal2nix "todo-miso" ./../../haskell/frontend { };
-  };
-}
+})).todo-miso
+
