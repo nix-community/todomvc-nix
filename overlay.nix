@@ -5,15 +5,15 @@ let
   noHaddock = p: final.haskell.lib.dontHaddock p;
   fast = p: noHaddock (noCheck p);
   misoPkgs = import miso { system = final.system; allowBroken = true; };
-
 in
 {
   todomvc = rec {
+    # This will make all package available using `todomvc.<package-name>`
     inherit polysemy http-media servant servant-jsaddle misoPkgs;
     haskellPkg = (misoPkgs.pkgs.haskell.packages.ghc865.override {
       all-cabal-hashes = misoPkgs.pkgs.fetchurl {
-        url = "https://github.com/commercialhaskell/all-cabal-hashes/archive/6d6bccc7fe2eb2bdf893d65a3cdaf4204819d91f.tar.gz";
-        sha256 = "sha256-CwtDHp4XYHX+M5kfywR6ySbl0Hx1dSxpkGz+WdFA08k=";
+        url = "https://github.com/commercialhaskell/all-cabal-hashes/archive/90e9a5c0282099dd8aa5a369b2b474d0dc354ab8.tar.gz";
+        sha256 = "sha256-2bEC/2b+Fa+yCg72upOHKQtEzCbf6lYjpTN0nT23nZw=";
       };
     }).extend (self: super: {
       aeson = noCheck (self.callHackage "aeson" "1.4.4.0" { });
@@ -29,7 +29,6 @@ in
       jsaddle-warp = fast super.jsaddle-warp;
       todo-common = self.callCabal2nix "todo-common" ./haskell/common { };
       todo-miso = self.callCabal2nix "todo-miso" ./haskell/frontend { miso = misoPkgs.miso-jsaddle; };
-
       # Backend specific dependencies.
       #
       # We build pantry to first-class-families because these packages are

@@ -2,6 +2,9 @@
 
 with pkgs;
 
+# Configure your development environment.
+#
+# Documentation: https://github.com/numtide/devshell
 mkDevShell {
   name = "todomvc-nix";
   motd = ''
@@ -20,27 +23,38 @@ mkDevShell {
     {
       name = "pginit";
       help = "init psql service";
+      category = "database";
       command = "${todomvc.nix.database.pgutil.init_pg} || echo '''PG init failed''' ";
     }
     {
       name = "pgstart";
       help = "start psql service";
+      category = "database";
       command = "${todomvc.nix.database.pgutil.start_pg} || echo '''PG start failed''' ";
     }
     {
       name = "pgstop";
       help = "stop psql service";
+      category = "database";
       command = "${todomvc.nix.database.pgutil.stop_pg} || echo '''PG stop failed''' ";
     }
     {
       name = "migrate";
       help = "migrate database using sqitch";
+      category = "database";
       command = "${todomvc.nix.database.migrate}/bin/sqitch deploy || echo '''Migrate database failed''' ";
     }
     {
       name = "deletedb";
       help = "delete database using sqitch";
+      category = "database";
       command = "${todomvc.nix.database.migrate}/bin/sqitch revert || echo '''Migrate database failed''' ";
+    }
+    {
+      name = "nixpkgs-fmt";
+      help = "use this to format the Nix code";
+      category = "fmt";
+      package = "nixpkgs-fmt";
     }
   ];
 
@@ -65,9 +79,7 @@ mkDevShell {
   };
 
   packages = [
-    # project executable
     # Haskell
-
     # todomvc.reflexDev.ghc.frontend
     todomvc.todoHaskell.haskell.packages.ghc865.cabal-install
     (todomvc.todoHaskell.haskell.packages.ghc865.ghcWithPackages (p: with p; [
@@ -106,6 +118,10 @@ mkDevShell {
     wasm-bindgen-cli
     binaryen
 
+    # Rust
+    ## Backend
+    todomvc.nix.rustOverlay
+
     ### Others
     binutils
     pkgconfig
@@ -113,20 +129,17 @@ mkDevShell {
     openssl.dev
     gcc
     glibc
-    zlib.dev
-    ncurses
-    icu.dev
     gmp.dev
     nixpkgs-fmt
 
-    # frontend
+    # Javascript related frontend
+    # It is also used for Rust's frontend development
     nodejs-12_x
+    wasm-pack
     yarn
     yarn2nix
-    nodePackages.node2nix
 
     # database
     postgresql
-    moreutils
   ];
 }
