@@ -39,5 +39,12 @@ nix-build -A defaultNix.legacyPackages.x86_64-linux.nix.haskellBackend
 
 ### For flake user:
 
+1. Frontend
 ```
+nix build .#nix.haskellFrontend
+```
+
+2. Backend
+```
+nix build .#nix.haskellBackend
 ```

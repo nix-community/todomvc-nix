@@ -6,6 +6,8 @@ Are you new to Nix? Or are you use Nix, but still don't know how `Nix` is useful
 
 This project's goal is to provide Nix user on every level (beginner, intermediate, and advance) a reference for building project using Nix programming language new feature called `Flakes`. This project contains several project written in different programming language and also how to nixified it.
 
+Related article: [todomvc-nix: One-Stop Solution for Developing Projects Using Nix](https://numtide.com/articles/todomvc-nix-rejuvenation/)
+
 ## Structure
 * [Technology Stack](#technology-stack)
 * [Get Started](#get-started)
@@ -110,6 +112,7 @@ Once it is finished, you can refer to the documentation below:
 * [Haskell](docs/Haskell.md)
 * [Rust](docs/Rust.md)
 * [PostgreSQL](docs/PostgreSQL.md)
+* [Nix](docs/Nix.md)
 
 ## For Developers
 [[Back to the Table of Contents] ↑](#structure)

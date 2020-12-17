@@ -1,6 +1,0 @@
-with-compiler: ghc-8.10.2
-packages:
-  ./.
-tests: false
-benchmarks: false
-write-ghc-environment-files: never
