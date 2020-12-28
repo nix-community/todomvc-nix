@@ -5,25 +5,25 @@ This section explains all the details about Nix and how it is being used in this
 We make structure of the documentation based on `.nix` file so it can be easy to understand.
 
 ## Structure
-* [default.nix](#default.nix)
-* [shell.nix](#shell.nix)
-* [flake.nix](#flake.nix)
-* [overlay.nix](#overlay.nix)
-* [nix/](#nix-folder)
-  * [default.nix](#nix)
-  + [database/](#database)
-    + [default.nix](#database)
-    + [migrate.nix](#migrate.nix)
-    + [pgutil.nix](#pgutil.nix)
-  + [haskell/](#haskell)
-    + [default.nix](#haskell)
-  + [haskell-miso/](#haskell-miso)
-    + [default.nix](#haskell-miso)
-  + [rust-overlay/](#rust-overlay)
-    + [default.nix](#rust-overlay)
-  + [rust-frontend/](#rust-frontend)
-    + [default.nix](#rust-frontend)
-* [devshell.nix](#devshell.nix)
+* [default.nix](#-defaultnix-)
+* [shell.nix](#-shellnix-)
+* [flake.nix](#-flakenix-)
+* [overlay.nix](#-overlaynix-)
+* [nix/](#-nix-)
+  * [default.nix](#-nix-)
+  + [database/](#-database-)
+    + [default.nix](#-database-)
+    + [migrate.nix](#-migratenix-)
+    + [pgutil.nix](#-pgutilnix-)
+  + [haskell/](#-haskell-)
+    + [default.nix](#-haskell-)
+  + [haskell-miso/](#-haskell-miso-)
+    + [default.nix](#-haskell-miso-)
+  + [rust-overlay/](#-rust-overlay-)
+    + [default.nix](#-rust-overlay-)
+  + [rust-frontend/](#-rust-frontend-)
+    + [default.nix](#-rust-frontend-)
+* [devshell.nix](#-devshellnix-)
 
 ----------------------------
 ## **| default.nix |**
@@ -390,5 +390,3 @@ or
 ```
 $ nix-shell
 ```
-
-

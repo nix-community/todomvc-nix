@@ -16,4 +16,5 @@
         "GO111MODULE": "on"
     },
     "haskell.logFile": "/home/rizary/hls.log",
+    "nixEnvSelector.nixShellConfig": "${workspaceRoot}/shell.nix",
 }
