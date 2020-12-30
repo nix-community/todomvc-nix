@@ -4,10 +4,7 @@
   # $ nix flake update --recreate-lock-file
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.flake-utils.inputs.nixpkgs.follows = "nixpkgs";
   inputs.devshell.url = "github:numtide/devshell/master";
-  # Use the same version of nixpkgs as this project.
-  inputs.devshell.inputs.nixpkgs.follows = "nixpkgs";
 
   # Rust dependencies
   inputs.naersk.url = "github:nmattia/naersk";
