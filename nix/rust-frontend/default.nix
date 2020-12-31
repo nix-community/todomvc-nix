@@ -1,32 +1,73 @@
-{ pkgs, binaryen, stdenv, todomvc }:
+{ pkgs, todomvc }:
 let
-  package = (pkgs.makeRustPlatform {
-    rustc = todomvc.nix.rustOverlay;
-    cargo = todomvc.nix.rustOverlay;
-  }).buildRustPackage rec {
-    pname = "rust-frontend";
-    version = "0.1.0";
+  inherit (pkgs) stdenv lib;
+
+  package = lib.importJSON ../../rust/package.json;
+
+  yarnPkg = pkgs.mkYarnPackage rec {
+    pname = package.name;
+    version = package.version;
+    src = null;
+    dontUnpack = true;
+    packageJSON = ../../rust/package.json;
+    yarnLock = ../../rust/yarn.lock;
+
+    preConfigure = ''
+      mkdir ${package.name}
+      cd ${package.name}
+      ln -s ${packageJSON} ./package.json
+      ln -s ${yarnLock} ./yarn.lock
+    '';
+
+    yarnPreBuild = ''
+      mkdir -p $HOME/.node-gyp/${pkgs.nodejs.version}
+      echo 9 > $HOME/.node-gyp/${pkgs.nodejs.version}/installVersion
+      ln -sfv ${pkgs.nodejs}/include $HOME/.node-gyp/${pkgs.nodejs.version}
+    '';
+
+    pkgConfig = {
+    };
+
+    publishBinsFor = [
+      "rollup"
+    ];
+  };
+in
+stdenv.mkDerivation {
+  name = "${package.name}-${package.version}";
+
+  src = lib.cleanSourceWith {
+    filter = name: type:
+      !(lib.hasSuffix ".log" name) &&
+      !(lib.hasSuffix ".nix" name) &&
+      !(lib.hasSuffix "node_modules" name)
+    ;
     src = ../../rust;
-    cargoSha256 = "sha256-lXnAyJUSWuu3fwR64wPnhWQV2gO4d7HXz+579QEiXnk=";
-    doCheck = false;
-    cargoBuildFlags = [ "-p" pname ];
-    target = "wasm32-unknown-unknown";
   };
 
-in
-stdenv.mkDerivation rec {
-  name = "wasm-bindgen-cli";
-  version = "0.2.69";
-  src = fetchTarball {
-    url = "https://github.com/rustwasm/wasm-bindgen/releases/download/${version}/wasm-bindgen-${version}-x86_64-unknown-linux-musl.tar.gz";
-    sha256 = "1d3s7f41bil5c3m0801nw6a07rq804rfh79wlvpp35s7l0j1y9an";
-  };
-  buildPhase = ''
-    ${src}/wasm-bindgen --target web --out-dir . ${package}/bin/rust_frontend.wasm
-    ${binaryen}/bin/wasm-opt -Os rust_frontend_bg.wasm -o rust_frontend_bg.wasm
+  buildInputs = [ pkgs.nodejs-14_x yarnPkg pkgs.yarn todomvc.nix.rustOverlay pkgs.openssl pkgs.zlib pkgs.cacert ];
+
+  patchPhase = ''
+    ln -s ${yarnPkg}/libexec/${package.name}/node_modules .
   '';
+
+  buildPhase = ''
+    # Yarn writes cache directories etc to $HOME.
+    export HOME=$PWD/yarn_home
+    export PATH=$PWD/node_modules/.bin:$PATH
+    node node_modules/wasm-pack/install.js
+    yarn --enable-pnp --offline build
+  '';
+
   installPhase = ''
-    mkdir -p $out
-    cp -R rust_* snippets $out/
+    mkdir -p $out/js
+    cp -r frontend/devhtml/. $out/
+    cp -r dist/js/. $out/js
+  '';
+
+  shellHook = ''
+    rm -rf node_modules
+    ln -sv ${yarnPkg}/libexec/${package.name}/node_modules .
+    export PATH=$PWD/node_modules/.bin:$PATH
   '';
 }
