@@ -2,14 +2,14 @@ import rust from "@wasm-tool/rollup-plugin-rust";
 
 export default {
     input: {
-        index: "./Cargo.toml",
+        index: "Cargo.toml",
     },
     output: {
-        dir: "js",
+        dir: "dist/js",
         format: "iife",
         sourcemap: true,
         chunkFileNames: "[name]-[hash].js",
-        assetFileNames: "assets/[name]-[extname]",
+        assetFileNames: "assets/[name]-[hash].[extname]",
     },
     plugins: [
         rust({

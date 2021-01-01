@@ -1,11 +1,11 @@
 {
-    "name": "rust",
+    "name": "frontend",
     "version": "0.1.0",
     "description": "frontend wasm in rust",
     "license": "MIT",
     "private": true,
     "scripts": {
-        "build": "rollup -c rollup.release.js",
+        "build": "rollup -c rollup.prod.js",
         "start": "run-p todo_backend todo_watch",
         "todo_backend": "cd ../../backend/rust && cargo run",
         "todo_watch": "yarn run todo_clean && yarn run todo_frontend ",
