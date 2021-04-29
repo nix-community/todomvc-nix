@@ -5,7 +5,7 @@ with pkgs;
 # Configure your development environment.
 #
 # Documentation: https://github.com/numtide/devshell
-mkDevShell {
+devshell.mkShell {
   name = "todomvc-nix";
   motd = ''
     Welcome to the todomvc-nix application.
@@ -66,17 +66,52 @@ mkDevShell {
     interactive = '''';
   };
 
-  env = {
-    DATABASE_URL = "postgresql://todomvc_dbuser:todomvc_dbpass@localhost:5432/todomvc_db";
-    PGHOST = "localhost";
-    PGPORT = "5432";
-    PGDATABASE = "todomvc_db";
-    PGUSER = "todomvc_dbuser";
-    PGPASSWORD = "todomvc_dbpass";
-    OPENSSL_DIR = "${openssl.bin}/bin";
-    OPENSSL_LIB_DIR = "${openssl.out}/lib";
-    OPENSSL_INCLUDE_DIR = "${openssl.out.dev}/include";
-  };
+  env = [
+    {
+      name = "DATABASE_URL";
+      value = "postgresql://todomvc_dbuser:todomvc_dbpass@localhost:5432/todomvc_db";
+    }
+
+    {
+      name = "PGHOST";
+      value = "localhost";
+    }
+
+    {
+      name = "PGPORT";
+      value = "5432";
+    }
+
+    {
+      name = "PGDATABASE";
+      value = "todomvc_db";
+    }
+
+    {
+      name = "PGUSER";
+      value = "todomvc_dbuser";
+    }
+
+    {
+      name = "PGPASSWORD";
+      value = "todomvc_dbpass";
+    }
+
+    {
+      name = "OPENSSL_DIR";
+      value = "${openssl.bin}/bin";
+    }
+
+    {
+      name = "OPENSSL_LIB_DIR";
+      value = "${openssl.out}/lib";
+    }
+
+    {
+      name = "OPENSSL_INCLUDE_DIR";
+      value = "${openssl.out.dev}/include";
+    }
+  ];
 
   packages = [
     # Haskell
