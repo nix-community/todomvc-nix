@@ -55,7 +55,7 @@ The key to understand Nix is that `default.nix` is the gateway for every Nix pro
 Meanwhile, *you do not need `default.nix` in your root folder if you want to use `flakes` feature*. However, for the non-flakes-nix distribution we make `default.nix` so user can just run:
 
 ```
-$ nix-build -A defaultNix.legacyPackages.x86_64-linux.nix.rust-overlay
+$ nix-build -A defaultNix.legacyPackages.x86_64-linux.nix.rustBackend
 ```
 
 If we take a look at the project's default.nix here ([see more](../default.nix)):
@@ -214,7 +214,7 @@ In todomvc-nix, we try to separate `.nix` file from the packages' folder. So we 
 {
   haskellBackend = pkgs.callPackage ./haskell { };
   haskellMiso = pkgs.callPackage ./haskell-miso { };
-  rust-overlay = pkgs.callPackage ./rust-overlay { };
+  rustOverlay = pkgs.callPackage ./rust-overlay { };
   rustFrontend = pkgs.callPackage ./rust-frontend { };
   database = pkgs.callPackage ./database { };
 }

@@ -11,6 +11,7 @@
         "--config-path=common/rust",
         "--config-path=frontend/rust",
     ],
+    "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix",
     "go.inferGopath": false,
     "go.toolsEnvVars": {
         "GO111MODULE": "on"
