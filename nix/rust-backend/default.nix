@@ -6,7 +6,7 @@
   pname = "rust-backend";
   version = "0.1.0";
   src = ../../rust;
-  cargoSha256 = "sha256-hn6O5XulVEGoTf5/f9Sa5qv5GNzbRcPaTMZ1btvIuQ4=";
+  cargoSha256 = "sha256-+ZWGYByAt+UMBRwD8N/nHBZE3oGv6xLDVEZXaYOff5I=";
   doCheck = false;
   cargoBuildFlags = [ "-p" pname ];
 
