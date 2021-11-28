@@ -120,7 +120,7 @@ Once it is finished, you can refer to the documentation below:
 ### **Build**
 [[Back to the Table of Contents] ↑](#structure)
 
-Buildin package in Nix Flakes is simply by running the following code:
+Building package in Nix Flakes is simply by running the following code:
 
 ```
 nix build .#todomvc.nix.haskellBackend
