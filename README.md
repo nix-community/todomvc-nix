@@ -102,7 +102,7 @@ Add the following code into your `configuration.nix`:
 Clone this repository, and enter into it:
 
 ```
-$ git clone https://github.com/nix-community/todomvc-nix/tree/flake
+$ git clone https://github.com/nix-community/todomvc-nix.git
 $ cd todomvc-nix
 ```
 
