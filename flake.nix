@@ -4,18 +4,13 @@
   # $ nix flake update --recreate-lock-file
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.devshell.url = "github:numtide/devshell/master";
+  inputs.devshell.url = "github:numtide/devshell/main";
 
   # Rust dependencies
   inputs.naersk.url = "github:nmattia/naersk";
   inputs.naersk.inputs.nixpkgs.follows = "nixpkgs";
   # Only for example, use the .url for simplicity
-  inputs.mozilla-overlay = {
-    type = "github";
-    owner = "mozilla";
-    repo = "nixpkgs-mozilla";
-    flake = false;
-  };
+  inputs.mozilla-overlay.url = "github:mozilla/nixpkgs-mozilla";
 
   # Haskell dependencies
   # This is haskell's dependencies for both Haskell backend and frontend.
@@ -44,8 +39,8 @@
               ];
             };
             overlays = [
-              (import mozilla-overlay)
-              devshell.overlay
+              mozilla-overlay.overlay
+              devshell.overlays.default
 
               naersk.overlay
               self.overlay

@@ -169,7 +169,7 @@ devshell.mkShell {
 
     # Javascript related frontend
     # It is also used for Rust's frontend development
-    nodejs-12_x
+    nodejs_20
     wasm-pack
     yarn
     yarn2nix
