@@ -2,6 +2,8 @@
 #### One-stop reference to build TodoMVC application inside the Nix world
 ### [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
 
+[![Nix Flake](https://github.com/nix-community/todomvc-nix/actions/workflows/nix-flake.yml/badge.svg)](https://github.com/nix-community/todomvc-nix/actions/workflows/nix-flake.yml)
+
 Are you new to Nix? Or are you use Nix, but still don't know how `Nix` is useful for your company? Maybe you have use Nix/NixOS in your current project, and you want to know how other project (using other programming language) fits into Nix world? TodoMVC-Nix can help you to understand how your project is structured using Nix to ease your project development setting.
 
 This project's goal is to provide Nix user on every level (beginner, intermediate, and advance) a reference for building project using Nix programming language new feature called `Flakes`. This project contains several project written in different programming language and also how to nixified it.
@@ -158,4 +160,3 @@ Please refer to [shell.nix](shell.nix) for further command and package.
 [[Back to the Table of Contents] ↑](#structure)
 
 Most of the code that we put in this repo has previously been made by others. [Here](References.md) we credit the repository that we take the code from.
-
