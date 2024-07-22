@@ -14,7 +14,7 @@ http-types = "2.5.0"
 async-std = { version = "1.6.0", features = ["attributes"] }
 sqlx = { version = "0.3.5", features = [ "postgres" ] }
 common = { path = "../common/", optional=false }
-openssl = { version = "0.10.60", features = [ "vendored" ] }
+openssl = { version = "0.10.66", features = [ "vendored" ] }
 uuid = "0.8.1"
 dotenv = "0.15.0"
 
