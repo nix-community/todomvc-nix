@@ -14,3 +14,7 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix develop --check
       - run: nix flake check
+      - name: "Check `nix develop` shell"
+        run: nix develop --check
+      - name: "Check `nix develop` shell can run command"
+        run: nix develop --command "echo"
