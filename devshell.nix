@@ -159,7 +159,7 @@ devshell.mkShell {
 
     ### Others
     binutils
-    pkgconfig
+    # pkgconfig
     openssl
     openssl.dev
     gcc

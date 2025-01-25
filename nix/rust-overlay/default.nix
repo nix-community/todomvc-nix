@@ -1,7 +1,7 @@
 { rustChannelOf }:
 (rustChannelOf {
   channel = "stable";
-  sha256 = "sha256-SXRtAuO4IqNOQq+nLbrsDFbVk+3aVA8NNpSZsKlVH/8=";
+  sha256 = "sha256-lMLAupxng4Fd9F1oDw8gx+qA0RuF7ou7xhNU8wgs0PU=";
 }).rust.override {
   extensions = [
     "clippy-preview"
